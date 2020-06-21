@@ -1,0 +1,2 @@
+# CaloriesCalc
+Calculate various indexes
