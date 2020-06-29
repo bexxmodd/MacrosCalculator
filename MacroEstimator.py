@@ -48,7 +48,7 @@ class macroCaloriesEstimator:
         if self.gender.lower() == 'woman' or self.gender.lower() == 'female':
             return 665 + (4.35 * self.weight) + (4.7 * self.height * 12) - (4.7 * self.age)
 
-    def total_daily_energy_expenditure(self, exercise_days_number):
+    def total_daily_energy_expenditure(self, exercise_days_number, active_job):
         """
         TDEE is an estimation of how calories burned per day when exercise is taken into account.
 
@@ -58,18 +58,24 @@ class macroCaloriesEstimator:
         :return: BMR adjusted for the exercise amount.
         :rtype: int
         """
+        tdee = 0
         if exercise_days_number < 0:
             raise ValueError ('You can\'t have negative number days')
         elif exercise_days_number > 7:
             raise ValueError ('There are only 7 days in a week')
-        if exercise_days_number < 1:
-            return self._basal_metabolic_rate() * 1.2
+        if exercise_days_number == 'Occasionally':
+            tdee = self._basal_metabolic_rate() * 1.2
         elif exercise_days_number >= 1 and exercise_days_number < 3:
-            return self._basal_metabolic_rate() * 1.375
+            tdee = self._basal_metabolic_rate() * 1.375
         elif exercise_days_number >= 3 and exercise_days_number < 5:
-            return self._basal_metabolic_rate() * 1.55
-        else:
-            return self._basal_metabolic_rate() * 1.725
+            tdee = self._basal_metabolic_rate() * 1.55
+        elif exercise_days_number >= 5 and exercise_days_number <= 7:
+            tdee = self._basal_metabolic_rate() * 1.725
+        # Additional multiplier if the user has a physically active job.
+        if active_job == 'Yes':
+            return tdee * 1.175
+        elif active_job == 'No':
+            return tdee
 
     def protein_requirement(self):
         """Minimum protein amount (in grams) needed for your body weight"""
@@ -100,7 +106,7 @@ class macroCaloriesEstimator:
             return protein, carbs, fats, sum([protein, carbs, fats])
 
     def print_macros(self, diet_type):
-        """Prints the chosen diet with macros as grams and kcal and totals as kcal."""
+        """Prints the chosen diet with macros as grams & kcal, and totals as kcal."""
         if diet_type.lower() == 'bulking':
             protein, carbs, fats, total = self.diet_macros(diet_type)
         elif diet_type.lower() == 'cutting':
