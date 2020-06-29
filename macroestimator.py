@@ -75,47 +75,38 @@ class macroCaloriesEstimator:
         """Minimum protein amount (in grams) needed for your body weight"""
         return self.lean_body_mass() / 2.20462 * 2.25
 
-    def bulking(self):
-        """Calculates macros (Proteins, Carbs, Fats) for a bulking diet.
+    def diet_macros(self, diet_type):
+        """Calculates macros (Proteins, Carbs, Fats) for a chosen diet.
 
+        :param diet_type: Three options of diet 'bulking', 'cutting', 'maintaining'
+        :type diet_type: string
         :return: protein, carbs, fats, totals: Returns macros as Kcal.
         :rtype: int
         """
-        protein = self.weight * self.PROTEIN_KCAL
-        carbs = self.weight * 2 * self.CARBS_KCAL
-        fats = int(self.weight * 0.45 * self.FATS_KCAL)
-        return protein, carbs, fats, sum([protein, carbs, fats])
+        if diet_type.lower() == 'bulking':
+            protein = self.weight * self.PROTEIN_KCAL
+            carbs = self.weight * 2 * self.CARBS_KCAL
+            fats = int(self.weight * 0.45 * self.FATS_KCAL)
+            return protein, carbs, fats, sum([protein, carbs, fats])
+        elif diet_type.lower() == 'cutting':
+            protein = int(self.weight * 1.4 * self.PROTEIN_KCAL)
+            carbs = self.weight * self.CARBS_KCAL
+            fats = int(self.weight * 0.25 * self.FATS_KCAL)
+            return protein, carbs, fats, sum([protein, carbs, fats])
+        elif diet_type.lower()== 'maintaning':
+            protein = self.weight * self.PROTEIN_KCAL
+            carbs = int(self.weight * 1.6 * self.CARBS_KCAL)
+            fats = int(self.weight * 0.35 * self.FATS_KCAL)
+            return protein, carbs, fats, sum([protein, carbs, fats])
 
-    def cutting(self):
-        """Calculates macros (Proteins, Carbs, Fats) for a diet for cutting.
-
-        :return: protein, carbs, fats, totals: Returns macros as Kcal.
-        :rtype: int
-        """
-        protein = int(self.weight * 1.4 * self.PROTEIN_KCAL)
-        carbs = self.weight * self.CARBS_KCAL
-        fats = int(self.weight * 0.25 * self.FATS_KCAL)
-        return protein, carbs, fats, sum([protein, carbs, fats])
-
-    def maintaining(self):
-        """Calculates macros (Proteins, Carbs, Fats) for a diet for maintaining weight.
-
-        :return: protein, carbs, fats, totals: Returns macros as Kcal.
-        :rtype: int
-        """
-        protein = self.weight * self.PROTEIN_KCAL
-        carbs = int(self.weight * 1.6 * self.CARBS_KCAL)
-        fats = int(self.weight * 0.35 * self.FATS_KCAL)
-        return protein, carbs, fats, sum([protein, carbs, fats])
-    
     def print_macros(self, diet_type):
         """Prints the chosen diet with macros as grams and kcal and totals as kcal."""
         if diet_type.lower() == 'bulking':
-            protein, carbs, fats, total = self.bulking()
+            protein, carbs, fats, total = self.diet_macros(diet_type)
         elif diet_type.lower() == 'cutting':
-            protein, carbs, fats, total = self.cutting()
+            protein, carbs, fats, total = self.diet_macros(diet_type)
         elif diet_type.lower() == 'maintaining':
-            protein, carbs, fats, total = self.maintaining()
+            protein, carbs, fats, total = self.diet_macros(diet_type)
         return f'Protein: {protein/self.PROTEIN_KCAL} grams; {protein} kcal\
             \nCarbs: {carbs/self.CARBS_KCAL} grams; {carbs} kcal\
             \nFats: {fats/self.FATS_KCAL} grams; {fats} kcal\
