@@ -43,9 +43,9 @@ class macroCaloriesEstimator:
         BMR is also known as your body's metabolism; therefore,
         any increase to your metabolic weight, such as exercise, will increase your BMR.
         """
-        if self.gender.lower() == 'man' or self.gender.lower() == 'male':
+        if self.gender.lower() == 'male':
             return 66 + (6.23 * self.weight) + (12.7 * self.height * 12) - (6.8 * self.age)
-        if self.gender.lower() == 'woman' or self.gender.lower() == 'female':
+        elif self.gender.lower() == 'female':
             return 665 + (4.35 * self.weight) + (4.7 * self.height * 12) - (4.7 * self.age)
 
     def total_daily_energy_expenditure(self, exercise_days_number, active_job):
@@ -59,21 +59,17 @@ class macroCaloriesEstimator:
         :rtype: int
         """
         tdee = 0
-        if exercise_days_number < 0:
-            raise ValueError ('You can\'t have negative number days')
-        elif exercise_days_number > 7:
-            raise ValueError ('There are only 7 days in a week')
         if exercise_days_number == 'Occasionally':
             tdee = self._basal_metabolic_rate() * 1.2
-        elif exercise_days_number >= 1 and exercise_days_number < 3:
+        elif exercise_days_number == '1 to 2 Day':
             tdee = self._basal_metabolic_rate() * 1.375
-        elif exercise_days_number >= 3 and exercise_days_number < 5:
+        elif exercise_days_number == '3 to 4 days':
             tdee = self._basal_metabolic_rate() * 1.55
-        elif exercise_days_number >= 5 and exercise_days_number <= 7:
+        elif exercise_days_number == '5 to 7 days':
             tdee = self._basal_metabolic_rate() * 1.725
         # Additional multiplier if the user has a physically active job.
         if active_job == 'Yes':
-            return tdee * 1.175
+            return tdee * 1.15
         elif active_job == 'No':
             return tdee
 
@@ -86,23 +82,26 @@ class macroCaloriesEstimator:
 
         :param diet_type: Three options of diet 'bulking', 'cutting', 'maintaining'
         :type diet_type: string
+        ...
         :return: protein, carbs, fats, totals: Returns macros as Kcal.
         :rtype: int
         """
         if diet_type.lower() == 'bulking':
             protein = self.weight * self.PROTEIN_KCAL
             carbs = self.weight * 2 * self.CARBS_KCAL
-            fats = int(self.weight * 0.45 * self.FATS_KCAL)
+            fats = self.weight * 0.45 * self.FATS_KCAL
             return protein, carbs, fats, sum([protein, carbs, fats])
+
         elif diet_type.lower() == 'cutting':
-            protein = int(self.weight * 1.4 * self.PROTEIN_KCAL)
+            protein = self.weight * 1.4 * self.PROTEIN_KCAL
             carbs = self.weight * self.CARBS_KCAL
-            fats = int(self.weight * 0.25 * self.FATS_KCAL)
+            fats = self.weight * 0.25 * self.FATS_KCAL
             return protein, carbs, fats, sum([protein, carbs, fats])
-        elif diet_type.lower()== 'maintaning':
+            
+        elif diet_type.lower()== 'maintaining':
             protein = self.weight * self.PROTEIN_KCAL
-            carbs = int(self.weight * 1.6 * self.CARBS_KCAL)
-            fats = int(self.weight * 0.35 * self.FATS_KCAL)
+            carbs = self.weight * 1.6 * self.CARBS_KCAL
+            fats = self.weight * 0.35 * self.FATS_KCAL
             return protein, carbs, fats, sum([protein, carbs, fats])
 
     def print_macros(self, diet_type):
@@ -113,7 +112,7 @@ class macroCaloriesEstimator:
             protein, carbs, fats, total = self.diet_macros(diet_type)
         elif diet_type.lower() == 'maintaining':
             protein, carbs, fats, total = self.diet_macros(diet_type)
-        return f'Protein: {protein/self.PROTEIN_KCAL} grams; {protein} kcal\
-            \nCarbs: {carbs/self.CARBS_KCAL} grams; {carbs} kcal\
-            \nFats: {fats/self.FATS_KCAL} grams; {fats} kcal\
-            \nTotal: \t{total} kcal'
+        return f'Protein: \t{round(protein/self.PROTEIN_KCAL, 2)} g. --> {int(protein)} kcal.\
+            \nCarbs: \t{round(carbs/self.CARBS_KCAL, 2)} g. --> {int(carbs)} kcal.\
+            \nFats: \t{round(fats/self.FATS_KCAL, 2)} g. --> {int(fats)} kcal.\
+            \nTotal: \t\t{int(total)} kcal.'

@@ -1,8 +1,10 @@
 """
 -[x] add .get() to the tk.Entry()
 -[x] add activity days input from drowpdown menu
--[ ] implement macroestimator to convert input into the class args
--[ ] add LBM, TDEE, MACROS print at the end
+-[x] implement macroestimator to convert input into the class args
+-[x] add LBM, TDEE, MACROS print at the end
+-[ ] add when you hoover pointer over TDE/LBM gives info
+-[ ] make reset button work
 """
 
 import tkinter as tk
@@ -14,64 +16,106 @@ def show_entry_fields():
 
 master = tk.Tk()
 # entries = ['Weight', 'Height', 'Body fat %', 'Age', 'Gender', 'Goal']
-tk.Label(master, text='Weight').grid(row=0, column=0)
-tk.Label(master, text='Height').grid(row=0, column=2)
-tk.Label(master, text='Body fat').grid(row=1, column=0)
-tk.Label(master, text='Age').grid(row=1, column=2)
-tk.Label(master, text='Gender').grid(row=2, column=0)
-tk.Label(master, text='Exercise').grid(row=2, column=2)
-tk.Label(master, text='Goal').grid(row=3, column=0)
-tk.Label(master, text='Physical Job').grid(row=3, column=2)
+tk.Label(master, text='Weight (lbs)').place(x=10, y=10)
+tk.Label(master, text='Height (feet)').place(x=260, y=10)
+tk.Label(master, text='Body fat %').place(x=10, y=40)
+tk.Label(master, text='Age (years)').place(x=260, y=40)
+tk.Label(master, text='Gender').place(x=10, y=70)
+tk.Label(master, text='Exercise').place(x=260, y=70)
+tk.Label(master, text='Goal').place(x=10, y=100)
+tk.Label(master, text='Physical Job').place(x=260, y=100)
 
-e1 = tk.Entry(master, width=15)
-e2 = tk.Entry(master, width=15)
-e3 = tk.Entry(master, width=15)
-e4 = tk.Entry(master, width=15)
+weight = tk.Entry(master, width=15)
+height = tk.Entry(master, width=15)
+fat = tk.Entry(master, width=15)
+age = tk.Entry(master, width=15)
 GenderOptions = ttk.Combobox(master, width=13)
 ExerciseOptions = ttk.Combobox(master, width=13)
 DietOptions = ttk.Combobox(master, width=13)
 JobOptions = ttk.Combobox(master, width=13)
 
-def collect_input():
-    return e1.get(), e2.get(), e3.get(), e4.get(), GenderOptions.get()
+# Collect user input
+def get_bio():
+    return weight.get(), height.get(), fat.get(), age.get(), GenderOptions.get()
 
-def collect_goal_activity():
+def get_activites():
+    return ExerciseOptions.get(), JobOptions.get()
+
+def get_goal():
     return DietOptions.get()
 
-def something():
-    sms = float(e1.get()) / 2.2
-    return tk.Label(master, text=str(sms) + ' lbs').grid(row=4, column=1)
+# Calculate
+def create_user():
+    weight, height, body_fat, age, gender = get_bio()
+    return mce(float(weight), float(height), float(body_fat), int(age), gender)
+
+def calcualte_lbm():
+    user = create_user()
+    return user.lean_body_mass()
+
+def calculate_tdee():
+    user = create_user()
+    exer, job = get_activites()
+    return user.total_daily_energy_expenditure(exer, job)
+
+def calculate_macros():
+    user = create_user()
+    diet = get_goal()
+    return user.print_macros(diet)
+
+# Create return Labels
+def final_output():
+    lbm = round(calcualte_lbm(), 2)
+    tdee = round(calculate_tdee(), 2)
+    macros = calculate_macros()
+    return tk.Label(master, text=str(lbm) + ' lbs', font='bold', fg='darkred',
+            anchor="e", borderwidth=2, relief='ridge').place(x=150, y=230), \
+        tk.Label(master, text=str(tdee) + ' kcal', font='bold', fg='darkred',
+            anchor="e", borderwidth=2, relief='ridge').place(x=150, y=260), \
+        tk.Label(master, text=macros, font='bold', fg='darkred',
+            anchor="e", justify='left', borderwidth=2, relief='ridge').place(x=150, y=290)
     
+
 
 # Adding combobox drop down list 
 GenderOptions['values'] = ('Male', 'Female')
-DietOptions['values'] = ('Bulking', 'Cutting', 'Maintaning')
-ExerciseOptions['values'] = ('Occasionally', '1 to 2 Day', '3 to 4 days', '4 to 5 days', '6 to 7 days')
+DietOptions['values'] = ('Bulking', 'Cutting', 'Maintaining')
+ExerciseOptions['values'] = ('Occasionally', '1 to 2 Day', '3 to 4 days', '5 to 7 days')
 JobOptions['values'] = ('Yes', 'No')
 
-e1.grid(row=0, column=1)
-e2.grid(row=1, column=1)
-e3.grid(row=0, column=3)
-e4.grid(row=1, column=3)
-GenderOptions.grid(row=2, column=1)
-ExerciseOptions.grid(row=2, column=3)
-DietOptions.grid(row=3, column=1)
-JobOptions.grid(row=3, column=3)
+weight.place(x=100, y=10)
+height.place(x=350, y=10)
+fat.place(x=100, y=40)
+age.place(x=350, y=40)
+GenderOptions.place(x=100, y=70)
+ExerciseOptions.place(x=350, y=70)
+DietOptions.place(x=100, y=100)
+JobOptions.place(x=350, y=100)
 
 tk.Button(master, 
         text='Calculate', fg='darkgreen',
-        command=something).place(relx=.41, rely=0.65, anchor="center")
+        command=final_output).place(x=140, y=150)
 
 tk.Button(master, 
-        text='Reset', fg='darkred',
-        command=master.quit).place(relx=.63, rely=0.65, anchor="center")
+        text='Reset',
+        command=master.quit).place(x=230, y=150)
 
-tk.Label(master, text='============= Results =============', fg='blue', font=("Courier", 10)).place(relx=.5, rely=0.85, anchor="center")
+tk.Button(master, 
+        text='Exit',
+        command=master.quit).place(x=296, y=150)
 
-# Results
-tk.Label(master, text='TDEE').grid(row=5, column=0)
-
-
+tk.Label(master, text='=============== Results ===============', fg='blue', font=("Courier", 10)).place(x=80, y=200)
 
 master.grid_rowconfigure(4, minsize=70)
+
+# Results
+tk.Label(master, text='LMB:').place(x=10, y=230)
+tk.Label(master, text='TDEE:').place(x=10, y=260)
+tk.Label(master, text='Daily Macros:').place(x=10, y=290)
+
+master.geometry('500x390+20+20')
+
+
+
+
 tk.mainloop()
