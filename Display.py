@@ -3,19 +3,19 @@
 -[x] add activity days input from drowpdown menu
 -[x] implement macroestimator to convert input into the class args
 -[x] add LBM, TDEE, MACROS print at the end
--[ ] add when you hoover pointer over TDE/LBM gives info
--[ ] make reset button work
+-[x] add when you hoover pointer over TDE/LBM gives info
+-[x] make reset button work
+-[ ] Adjust the diet calculator
+-[ ] Turn script into functional form
 """
 
 import tkinter as tk
 from tkinter import ttk
 from MacroEstimator import macroCaloriesEstimator as mce
-
-def show_entry_fields():
-    print("Weight: {}\tHeight: {}\nBody fat: {}\tAge: {}".format(e1.get(), e2.get(), e3.get(), e4.get()))
+from ToolTip import CreateToolTip
 
 master = tk.Tk()
-# entries = ['Weight', 'Height', 'Body fat %', 'Age', 'Gender', 'Goal']
+
 tk.Label(master, text='Weight (lbs)').place(x=10, y=10)
 tk.Label(master, text='Height (feet)').place(x=260, y=10)
 tk.Label(master, text='Body fat %').place(x=10, y=40)
@@ -118,13 +118,20 @@ tk.Label(master, text='=============== Results ===============', fg='blue', font
 master.grid_rowconfigure(4, minsize=70)
 
 # Results
-tk.Label(master, text='LMB:').place(x=10, y=230)
-tk.Label(master, text='TDEE:').place(x=10, y=260)
-tk.Label(master, text='Daily Macros:').place(x=10, y=290)
+lbm = tk.Label(master, text='LMB:')
+lbm.place(x=10, y=230)
+
+tdee = tk.Label(master, text='TDEE:')
+tdee.place(x=10, y=260)
+
+macros = tk.Label(master, text='Daily Macros:')
+macros.place(x=10, y=290)
+
+# Hoover the pointer over the results
+CreateToolTip(lbm, text='Lean Body Mass (LBM) is a part of body composition that is defined\nas the difference between total body weight and body fat weight.')
+CreateToolTip(tdee, text='Total Daily Energy Expenditures (TDEE) is an estimation of how\ncalories burned per day when exercise is taken into account.')
+CreateToolTip(macros, text='Portion of each macro element in the daily diet')
+
 
 master.geometry('500x390+20+20')
-
-
-
-
 tk.mainloop()
