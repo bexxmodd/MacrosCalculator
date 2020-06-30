@@ -74,7 +74,16 @@ def final_output():
             anchor="e", borderwidth=2, relief='ridge').place(x=150, y=260), \
         tk.Label(master, text=macros, font='bold', fg='darkred',
             anchor="e", justify='left', borderwidth=2, relief='ridge').place(x=150, y=290)
-    
+
+def reset_button():
+    weight.delete(0, 'end')
+    height.delete(0, 'end')
+    fat.delete(0, 'end')
+    age.delete(0, 'end')
+    GenderOptions.delete(0, 'end')
+    ExerciseOptions.delete(0, 'end')
+    DietOptions.delete(0, 'end')
+    JobOptions.delete(0, 'end')
 
 
 # Adding combobox drop down list 
@@ -98,7 +107,7 @@ tk.Button(master,
 
 tk.Button(master, 
         text='Reset',
-        command=master.quit).place(x=230, y=150)
+        command=reset_button).place(x=230, y=150)
 
 tk.Button(master, 
         text='Exit',
