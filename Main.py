@@ -133,7 +133,7 @@ CreateToolTip(macros, text='Portion of each macro element in the daily diet')
 def callback(url):
     webbrowser.open_new('https://github.com/bexxmodd/CaloriesCalc')
 
-github_logo = tk.PhotoImage(file="small-github.png")
+github_logo = tk.PhotoImage(file="./img/small-github.png")
 bexxmodd = tk.Label(master, image=github_logo, cursor="hand2")
 bexxmodd.place(relx=0.5, y=400, anchor='center')
 bexxmodd.bind("<Button-1>", callback)
@@ -148,6 +148,6 @@ positionRight = int(master.winfo_screenwidth()/2 - windowWidth/2)
 positionDown = int(master.winfo_screenheight()/2 - windowHeight/2)
 
 master.geometry(f'500x420+{positionRight}+{positionDown}')
-master.iconphoto(False, tk.PhotoImage(file='nutrition.png'))
+master.iconphoto(False, tk.PhotoImage(file='./img/nutrition.png'))
 
 tk.mainloop()
