@@ -4,6 +4,8 @@ If you are into fitness/Bodybuilding probably you are familiar with what Macros 
 ## How it Works
 Input the personal physics characteristics, like weight, height, age, amount of exercise, and the app will calculate your LBM, TDEE and the Macros share for your daily calorie intake with the number of calories needed to achieve the selected goal. This can be a great guide to aide your fitness goal.
 Simply enter personal information and click the **Calculate** button and *voalá*.
+
+
 <img src="https://media2.giphy.com/media/eeouviOFUJSYIwgkw1/giphy.gif" alt="entry" width="400"/> <img src="https://media0.giphy.com/media/igVwsO7jzxgvJya8UR/giphy.gif" alt="info" width="400"/>
 
 
