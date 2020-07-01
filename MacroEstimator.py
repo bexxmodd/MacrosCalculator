@@ -48,24 +48,24 @@ class macroCaloriesEstimator:
         elif self.gender.lower() == 'female':
             return 665 + (4.35 * self.weight) + (4.7 * self.height * 12) - (4.7 * self.age)
 
-    def total_daily_energy_expenditure(self, exercise_days_number, active_job):
+    def total_daily_energy_expenditure(self, exercise_frequency, active_job):
         """
         TDEE is an estimation of how calories burned per day when exercise is taken into account.
 
-        :param exercise_days_number: Number of days you exercise per week.
-        :type exercise_days_number: int
+        :param exercise_frequency: Number of days you exercise per week.
+        :type exercise_frequency: int
         ...
         :return: BMR adjusted for the exercise amount.
         :rtype: int
         """
         tdee = 0
-        if exercise_days_number == 'Occasionally':
+        if exercise_frequency == 'Occasionally':
             tdee = self._basal_metabolic_rate() * 1.2
-        elif exercise_days_number == '1 to 2 Day':
+        elif exercise_frequency == '1 to 2 Day':
             tdee = self._basal_metabolic_rate() * 1.375
-        elif exercise_days_number == '3 to 4 days':
+        elif exercise_frequency == '3 to 4 days':
             tdee = self._basal_metabolic_rate() * 1.55
-        elif exercise_days_number == '5 to 7 days':
+        elif exercise_frequency == '5 to 7 days':
             tdee = self._basal_metabolic_rate() * 1.725
         # Additional multiplier if the user has a physically active job.
         if active_job == 'Yes':
@@ -77,42 +77,76 @@ class macroCaloriesEstimator:
         """Minimum protein amount (in grams) needed for your body weight"""
         return self.lean_body_mass() / 2.20462 * 2.25
 
-    def diet_macros(self, diet_type):
+    def diet_macros(self, diet_type, exercise_frequency, active_job):
         """Calculates macros (Proteins, Carbs, Fats) for a chosen diet.
 
-        :param diet_type: Three options of diet 'bulking', 'cutting', 'maintaining'
+        :param diet_type: Three options of diet 'gain', 'lose', 'maintain'
         :type diet_type: string
         ...
         :return: protein, carbs, fats, totals: Returns macros as Kcal.
         :rtype: int
         """
-        if diet_type.lower() == 'bulking':
+        if diet_type.lower() == 'gain':
             protein = self.weight * self.PROTEIN_KCAL
             carbs = self.weight * 2 * self.CARBS_KCAL
             fats = self.weight * 0.45 * self.FATS_KCAL
+            total = sum([protein, carbs, fats])
+            tdee = self.total_daily_energy_expenditure(exercise_frequency, active_job)
+            if tdee > total:
+                diff = tdee - total
+                while total <= tdee + 500:
+                    protein += diff * (protein/total)
+                    carbs += diff * (carbs/total)
+                    fats += diff * (fats/total)
+                    total = sum([protein, carbs, fats])
             return protein, carbs, fats, sum([protein, carbs, fats])
 
-        elif diet_type.lower() == 'cutting':
+        elif diet_type.lower() == 'lose':
             protein = self.weight * 1.4 * self.PROTEIN_KCAL
             carbs = self.weight * self.CARBS_KCAL
             fats = self.weight * 0.25 * self.FATS_KCAL
+            total = sum([protein, carbs, fats])
+            tdee = self.total_daily_energy_expenditure(exercise_frequency, active_job)
+            if tdee - total < 350:
+                diff = 350 - (tdee - total)
+                while total >= tdee - 350:
+                    protein -= diff * (protein/total)
+                    carbs -= diff * (carbs/total)
+                    fats -= diff * (fats/total)
+                    total = sum([protein, carbs, fats])
             return protein, carbs, fats, sum([protein, carbs, fats])
             
-        elif diet_type.lower()== 'maintaining':
+        elif diet_type.lower()== 'maintain':
             protein = self.weight * self.PROTEIN_KCAL
             carbs = self.weight * 1.6 * self.CARBS_KCAL
             fats = self.weight * 0.35 * self.FATS_KCAL
+            total = sum([protein, carbs, fats])
+            tdee = self.total_daily_energy_expenditure(exercise_frequency, active_job)
+            if tdee > total:
+                diff = tdee - total
+                while total < tdee:
+                    protein += 1
+                    carbs += 1.6
+                    fats += 0.35
+                    total = sum([protein, carbs, fats])
+            elif tdee < total:
+                diff = total - tdee
+                while total > tdee:
+                    protein += 1
+                    carbs += 1.6
+                    fats += 0.35
+                    total = sum([protein, carbs, fats])
             return protein, carbs, fats, sum([protein, carbs, fats])
 
-    def print_macros(self, diet_type):
+    def print_macros(self, diet_type, exercise_frequency, active_job):
         """Prints the chosen diet with macros as grams & kcal, and totals as kcal."""
-        if diet_type.lower() == 'bulking':
-            protein, carbs, fats, total = self.diet_macros(diet_type)
-        elif diet_type.lower() == 'cutting':
-            protein, carbs, fats, total = self.diet_macros(diet_type)
-        elif diet_type.lower() == 'maintaining':
-            protein, carbs, fats, total = self.diet_macros(diet_type)
-        return f'Protein: \t{round(protein/self.PROTEIN_KCAL, 2)} g. --> {int(protein)} kcal.\
-            \nCarbs: \t{round(carbs/self.CARBS_KCAL, 2)} g. --> {int(carbs)} kcal.\
-            \nFats: \t{round(fats/self.FATS_KCAL, 2)} g. --> {int(fats)} kcal.\
+        if diet_type.lower() == 'gain':
+            protein, carbs, fats, total = self.diet_macros(diet_type, exercise_frequency, active_job)
+        elif diet_type.lower() == 'lose':
+            protein, carbs, fats, total = self.diet_macros(diet_type, exercise_frequency, active_job)
+        elif diet_type.lower() == 'maintain':
+            protein, carbs, fats, total = self.diet_macros(diet_type, exercise_frequency, active_job)
+        return f'Protein: \t{round(protein/self.PROTEIN_KCAL, 1)} g. \t{int(protein)} kcal.\
+            \nCarbs: \t{round(carbs/self.CARBS_KCAL, 1)} g. \t{int(carbs)} kcal.\
+            \nFats: \t{round(fats/self.FATS_KCAL, 1)} g. \t{int(fats)} kcal.\
             \nTotal: \t\t{int(total)} kcal.'
