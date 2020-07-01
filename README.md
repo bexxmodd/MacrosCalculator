@@ -12,7 +12,7 @@ Currently, the app can be only run through the shell.
 
 1. Copy the repo to your local machine by first opening shell/bash/cmd terminal on your computer and typing
 ```bash
-$ git clone https://github.com/bexxmodd/CaloriesCalc.git
+$ git clone https://github.com/bexxmodd/MacrosCalculator.git
 ```
 
 2. Go into the cloned folder.
