@@ -1,4 +1,5 @@
 """
+-[x] Reset output
 -[ ] Turn script into functional form
 """
 
@@ -64,14 +65,21 @@ def final_output():
     lbm = round(calcualte_lbm(), 2)
     tdee = round(calculate_tdee(), 2)
     macros = calculate_macros()
-    return tk.Label(master, text=str(lbm) + ' lbs', font='verdana 11 bold', fg='darkred',
-            anchor="e", borderwidth=2, relief='ridge').place(x=150, y=230), \
-        tk.Label(master, text=str(tdee) + ' kcal', font='verdana 11 bold', fg='darkred',
-            anchor="e", borderwidth=2, relief='ridge').place(x=150, y=260), \
-        tk.Label(master, text=macros, font='verdana 11 bold', fg='darkred',
-            anchor="e", justify='left', borderwidth=2, relief='ridge').place(x=150, y=290)
+    lbm_info= tk.Label(master, text=str(lbm) + ' lbs', font='verdana 11 bold', fg='darkred',
+            anchor="e", borderwidth=2, relief='ridge')
+    tdee_info = tk.Label(master, text=str(tdee) + ' kcal', font='verdana 11 bold', fg='darkred',
+            anchor="e", borderwidth=2, relief='ridge')
+    macros_info = tk.Label(master, text=macros, font='verdana 11 bold', fg='darkred',
+            anchor="e", justify='left', borderwidth=2, relief='ridge')
+    lbm_info.place(x=150, y=230)
+    tdee_info.place(x=150, y=260)
+    macros_info.place(x=150, y=290)
 
 def reset_button():
+    count = 0
+    while count < 3:
+        master.winfo_children()[-1].destroy()
+        count += 1;
     weight.delete(0, 'end')
     height.delete(0, 'end')
     fat.delete(0, 'end')
