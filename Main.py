@@ -134,7 +134,8 @@ tk.Label(master, text='========================= Results =======================
 
 """Display final results"""
 # Results
-results = [tk.Label(master, text='LMB:'),
+results = [
+    tk.Label(master, text='LMB:'),
     tk.Label(master, text='TDEE:'),
     tk.Label(master, text='Daily Macros:')
 ]
@@ -155,6 +156,7 @@ def callback(url):
 
 # Link to the github repo with github logo
 github_logo = tk.PhotoImage(file="./img/small-github.png")
+
 bexxmodd = tk.Label(master, image=github_logo, cursor="hand2")
 bexxmodd.place(relx=0.5, y=400, anchor='center')
 bexxmodd.bind("<Button-1>", callback)
