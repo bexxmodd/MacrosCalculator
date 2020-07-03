@@ -1,4 +1,4 @@
-""" -[] add line to calories function to make sure it works as inteded"""
+
 
 class macroCaloriesEstimator:
     """The class calculates various body indexes like LBM, BMR & TDEE.

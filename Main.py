@@ -78,6 +78,9 @@ def get_activites():
 # Instantiate macroCaloriesEstimator class
 def create_user():
     weight, height, body_fat, age = get_bio()
+    for i in [weight, height, body_fat, age]:
+        if i < 0:
+            raise ValueError ('No negative values')
     return mce(float(weight), float(height), float(body_fat), int(age), get_gender())
 
 def calcualte_lbm():
@@ -115,6 +118,10 @@ def reset_button():
             count += 1;
         for entry in entry_points:
             entry.delete(0, 'end')
+
+# Error message
+def error_msg():
+    return tk.messagebox.showerror(title='ValueError', message='No negative values allowed')
 
 """Buttons for calculation, reset, and exit"""
 tk.Button(master, 
