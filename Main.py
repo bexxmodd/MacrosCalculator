@@ -65,7 +65,7 @@ for entry in entry_points[4:]:
 """Collect the user input"""
 # Get bio
 def get_bio():
-    return weight.get(), height.get(), fat.get(), age.get()
+    return {"weight": float(weight.get()), "height": float(height.get()), "fat": float(fat.get()), "age": float(age.get())}
 
 def get_gender():
     return gender.get()
@@ -77,11 +77,11 @@ def get_activites():
 """Make calculations from MacroEstimator"""
 # Instantiate macroCaloriesEstimator class
 def create_user():
-    weight, height, body_fat, age = get_bio()
-    for i in [weight, height, body_fat, age]:
+    user_bio = get_bio()
+    for i in user_bio.values():
         if i < 0:
             raise ValueError ('No negative values')
-    return mce(float(weight), float(height), float(body_fat), int(age), get_gender())
+    return mce(user_bio["weight"], user_bio["height"], user_bio["fat"], user_bio["age"], get_gender())
 
 def calcualte_lbm():
     return create_user().lean_body_mass()
