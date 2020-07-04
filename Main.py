@@ -1,3 +1,9 @@
+"""
+- [ ] Add units converted: Lbs to metrics
+- [ ] Create body fat % estimator
+- [ ] Make program installable using py.exe or NSIS
+"""
+
 import tkinter as tk
 import webbrowser
 
