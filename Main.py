@@ -65,7 +65,7 @@ for entry in entry_points[4:]:
 """Collect the user input"""
 # Get bio
 def get_bio():
-    return {"weight": float(weight.get()), "height": float(height.get()), "fat": float(fat.get()), "age": float(age.get())}
+    return {'weight': float(weight.get()), 'height': float(height.get()), 'fat': float(fat.get()), 'age': int(age.get())}
 
 def get_gender():
     return gender.get()
