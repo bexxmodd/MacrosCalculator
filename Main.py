@@ -136,8 +136,9 @@ tk.Button(master,
         text='Exit', font='verdana 10',
         command=master.quit).place(x=296, y=150)
 
-tk.Label(master, text='========================= Results =========================',
-        fg='blue', font=("Courier", 10)).place(relx=0.5, y=200, anchor='center')
+tk.Label(master, text='Results',
+        fg='blue', font=("Courier", 10)).place(relx=0.5, y=205, anchor='center')
+tk.Frame(master, height=1, background='blue').pack(expand='yes', fill='x', padx=10) 
 
 """Display final results"""
 # Results
