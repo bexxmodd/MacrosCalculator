@@ -1,13 +1,9 @@
 import tkinter as tk
 import webbrowser
-import logging
 
 from tkinter import ttk
 from MacroEstimator import macroCaloriesEstimator as mce
 from ToolTip import CreateToolTip
-
-LOG_LABELS = 'label_names.txt'
-logging.basicConfig(filename="label_name.txt", level=logging.DEBUG)
 
 # Create the master frame,
 master = tk.Tk()
