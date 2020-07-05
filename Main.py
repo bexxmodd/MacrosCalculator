@@ -1,21 +1,20 @@
-"""
-- [ ] Add units converted: Lbs to metrics
-- [ ] Create body fat % estimator
-- [ ] Make program installable using py.exe or NSIS
-"""
-
 import tkinter as tk
 import webbrowser
+import logging
 
 from tkinter import ttk
 from MacroEstimator import macroCaloriesEstimator as mce
 from ToolTip import CreateToolTip
 
+LOG_LABELS = 'label_names.txt'
+logging.basicConfig(filename="label_name.txt", level=logging.DEBUG)
+
 # Create the master frame,
 master = tk.Tk()
 master.title("Macros Calculator")
 
-labels = ['Weight (lbs)',
+labels = [
+    'Weight (lbs)',
     'Height (feet)',
     'Body Fat %',
     'Age (years)',
@@ -71,7 +70,7 @@ for entry in entry_points[4:]:
 """Collect the user input"""
 # Get bio
 def get_bio():
-    return {'weight': float(weight.get()), 'height': float(height.get()), 'fat': float(fat.get()), 'age': int(age.get())}
+    return {'weight': float(weight.get()), 'height': float(height.get()), 'fat': float(fat.get()), 'age': float(age.get())}
 
 def get_gender():
     return gender.get()
@@ -105,25 +104,27 @@ def final_output():
     lbm = round(calcualte_lbm(), 2)
     tdee = round(calculate_tdee(), 2)
     macros = calculate_macros()
-    lbm_info = tk.Label(master, text=str(lbm) + ' lbs', font='verdana 11 bold', fg='darkred',
-            anchor="e", borderwidth=2, relief='ridge')
-    tdee_info = tk.Label(master, text=str(tdee) + ' kcal', font='verdana 11 bold', fg='darkred',
-            anchor="e", borderwidth=2, relief='ridge')
-    macros_info = tk.Label(master, text=macros, font='verdana 11 bold', fg='darkred',
+    global results # Create a global variable of output labels to make it reusable
+    results = [
+        tk.Label(master, text=str(lbm) + ' lbs', font='verdana 11 bold', fg='darkred',
+            anchor="e", borderwidth=2, relief='ridge'),
+        tk.Label(master, text=str(tdee) + ' kcal', font='verdana 11 bold', fg='darkred',
+            anchor="e", borderwidth=2, relief='ridge'),
+        tk.Label(master, text=macros, font='verdana 11 bold', fg='darkred',
             anchor="e", justify='left', borderwidth=2, relief='ridge')
-    lbm_info.place(x=150, y=230)
-    tdee_info.place(x=150, y=260)
-    macros_info.place(x=150, y=290)
+        ]
+    y_axis = 230
+    # Place output labels
+    for i in results:
+        i.place(x=150, y=y_axis)
+        y_axis += 30
 
 # Erase the user intput and output
 def reset_button():
-    if len(master.winfo_children()) >= 26:
-        count = 0
-        while count < 3:
-            master.winfo_children()[-1].destroy()
-            count += 1;
-        for entry in entry_points:
-            entry.delete(0, 'end')
+    for i in results:   # Erase output results
+        i.place_forget()
+    for entry in entry_points:  # Erase data entry points
+        entry.delete(0, 'end')
 
 # Error message
 def error_msg():
