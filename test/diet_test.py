@@ -141,8 +141,23 @@ class TestPerson(unittest.TestCase):
         )
         diet10.set_macros()
         diet10.calculate_macros_gain()
-        print(diet10)
 
+    def test_goal_setter(self):
+        diet11 = Diet(
+            'Occasionally', False, 'gain', 155, 6.2, 25, 'male', 15
+        )
+        diet11.set_macros()
+        self.assertEqual(diet11.protein, 620)
+        self.assertEqual(diet11.carbs, 1240)
+        self.assertEqual(diet11.fats, 627.75)
+        self.assertEqual(diet11.total, 2487.75)
+        # Check if goal changes and macros with it
+        diet11.set_goal('lose')
+        self.assertEqual(diet11.goal, 'lose')
+        self.assertEqual(diet11.protein, 868)
+        self.assertEqual(diet11.carbs, 620)
+        self.assertEqual(diet11.fats, 348.75)
+        self.assertEqual(diet11.total, 1836.75)
 
 if __name__ == '__main__':
     unittest.main()
