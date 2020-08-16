@@ -54,6 +54,13 @@ Project is using only inherent Python packages:
 * 0.5.1
   * First functional beta version.
 
+
+## Contributors
+<a href="https://github.com/bexxmodd/MacrosCalculator/graphs/contributors">
+  <img src="https://contributors-img.web.app/image?repo=bexxmodd/MacrosCalculator" />
+</a>
+
+
 ## Meta
 
 **Follow me on social media:**
