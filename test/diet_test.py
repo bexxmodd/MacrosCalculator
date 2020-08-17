@@ -10,41 +10,40 @@ from MacroEstimator import Diet
 class TestPerson(unittest.TestCase):
     """Test Diet class"""
 
-    def test_diet_instantiation(self):
-        test_diet = Diet(
+    @classmethod
+    def setUpClass(cls):
+        cls.diet1 = Diet(
             '3 to 4 days', True, 'gain', 220, 7.1, 29, 'Male', 18
         )
-        self.assertIsInstance(test_diet, Diet)
-        self.assertTrue(test_diet.active_job)
-
-    def test_macro_variables(self):
-        diet1 = Diet(
-            '3 to 4 days', True, 'gain', 220, 7.1, 29, 'Male', 18
-        )
-        diet2 = Diet(
+        cls.diet2 = Diet(
             '1 to 2 Day', False, 'Lose', 132, 5.2, 37, 'feMale', 20
         )
-        diet3 = Diet(
+        cls.diet3 = Diet(
             'Occasionally', True, 'maIntain', 155.5, 5.4, 25, 'female', 23.2
         )
-        diet1.set_macros()
-        diet2.set_macros()
-        diet3.set_macros()
 
-        self.assertEqual(diet1.protein, 880)
-        self.assertEqual(diet1.carbs, 1760)
-        self.assertEqual(diet1.fats, 891)
-        self.assertEqual(diet1.total, 3531)
+    def test_diet_instantiation(self):
+        self.assertIsInstance(self.diet1, Diet)
+        self.assertTrue(self.diet1.active_job)
 
-        self.assertAlmostEqual(diet2.protein, 739, 0)
-        self.assertEqual(diet2.carbs, 528)
-        self.assertEqual(diet2.fats, 297)
-        self.assertAlmostEqual(diet2.total, 1564, 0)
+    def test_macro_variables(self):
+        for diet in [self.diet1, self.diet2, self.diet3]:
+            diet.set_macros()
+
+        self.assertEqual(self.diet1.protein, 880)
+        self.assertEqual(self.diet1.carbs, 1760)
+        self.assertEqual(self.diet1.fats, 891)
+        self.assertEqual(self.diet1.total, 3531)
+
+        self.assertAlmostEqual(self.diet2.protein, 739, 0)
+        self.assertEqual(self.diet2.carbs, 528)
+        self.assertEqual(self.diet2.fats, 297)
+        self.assertAlmostEqual(self.diet2.total, 1564, 0)
         
-        self.assertEqual(diet3.protein, 622)
-        self.assertAlmostEqual(diet3.carbs, 995.2, 1)
-        self.assertAlmostEqual(diet3.fats, 489.8, 1)
-        self.assertAlmostEqual(diet3.total, 2107, 0)
+        self.assertEqual(self.diet3.protein, 622)
+        self.assertAlmostEqual(self.diet3.carbs, 995.2, 1)
+        self.assertAlmostEqual(self.diet3.fats, 489.8, 1)
+        self.assertAlmostEqual(self.diet3.total, 2107, 0)
 
     def test_total_daily_energy_expenditure(self):
         diet4 = Diet(
@@ -152,7 +151,7 @@ class TestPerson(unittest.TestCase):
         self.assertEqual(diet11.fats, 627.75)
         self.assertEqual(diet11.total, 2487.75)
         
-        # Check if goal changes and macros with it
+        # Check if macros change when goal changes
         diet11.set_goal('lose')
         self.assertEqual(diet11.goal, 'lose')
         self.assertEqual(diet11.protein, 868)

@@ -8,24 +8,23 @@ from MacroEstimator import Person
 
 class TestPerson(unittest.TestCase):
     """Test Person class instantiation and and its methods"""
+    
+    @classmethod
+    def setUpClass(cls):
+        cls.male1 = Person(180, 6, 31, 'Male')
 
     def test_person_object(self):
-        test_person = Person(330, 4.2, 29, 'male', 33)
-        self.assertIsInstance(test_person, Person)
+        self.assertIsInstance(self.male1, Person)
 
     def test_person_instantiation(self):
-        male1 = Person(220, 7.1, 29, 'Male', 18)
-        self.assertEqual(male1.weight, 220)
-        self.assertEqual(male1.height, 7.1)
-        self.assertEqual(male1.age, 29)
-        self.assertEqual(male1.gender, 'male')
-        self.assertEqual(male1.body_fat, 18)
+        self.assertEqual(self.male1.weight, 180)
+        self.assertEqual(self.male1.height, 6)
+        self.assertEqual(self.male1.age, 31)
+        self.assertEqual(self.male1.gender, 'male')
 
     def test_without_bodyfat_instantiation(self):
-        person0 = Person(180, 6, 31, 'Male')
-        self.assertIsNone(person0.body_fat)
-        person0.set_body_fat()
-        self.assertEqual(round(person0.body_fat, 2), 20.10)
+        self.male1.set_body_fat()
+        self.assertEqual(round(self.male1.body_fat, 1), 20.1)
     
     def test_raise_errors(self):
         with self.assertRaises(ValueError):
@@ -38,9 +37,9 @@ class TestPerson(unittest.TestCase):
             person1 = (Person(115, 5.4, 27, 'dog', 19))
 
     def test_lean_body_mass(self):
-        female1 = Person(115, 5.5, 25, 'female', 22)
         msg = ">> LBM is incorrectly calcualted <<"
-        self.assertEqual(female1.lean_body_mass(), 89.7, msg)
+        self.male1.set_body_fat()
+        self.assertEqual(round(self.male1.lean_body_mass(), 1), 143.8, msg)
 
     def test_basal_metabolic_rate(self):
         male2 = Person(210, 6.5, 25, 'Male', 8)
@@ -58,6 +57,10 @@ class TestPerson(unittest.TestCase):
                         178.3981, msg)
         self.assertEqual(round(female3.protein_requirement(), 4),
                         112.9787, msg)
+
+    @classmethod
+    def teadDownClass(cls):
+        cls.male1.destroy()
 
 if __name__ == '__main__':
     unittest.main()
