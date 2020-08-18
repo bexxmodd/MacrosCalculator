@@ -56,34 +56,12 @@
     <property name="geometry">
      <rect>
       <x>300</x>
-      <y>120</y>
-      <width>185</width>
-      <height>80</height>
+      <y>170</y>
+      <width>181</width>
+      <height>52</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout_6">
-     <item>
-      <widget class="QCheckBox" name="activeJob">
-       <property name="font">
-        <font>
-         <family>Ubuntu Mono</family>
-         <pointsize>11</pointsize>
-         <weight>50</weight>
-         <italic>false</italic>
-         <bold>false</bold>
-        </font>
-       </property>
-       <property name="layoutDirection">
-        <enum>Qt::LeftToRight</enum>
-       </property>
-       <property name="autoFillBackground">
-        <bool>false</bool>
-       </property>
-       <property name="text">
-        <string>Physically Active Job</string>
-       </property>
-      </widget>
-     </item>
      <item>
       <widget class="QLabel" name="exercise_text">
        <property name="font">
@@ -94,10 +72,13 @@
        <property name="text">
         <string>Exercise Frequency</string>
        </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
       </widget>
      </item>
      <item>
-      <widget class="QComboBox" name="workout_freq">
+      <widget class="QComboBox" name="exercise_freq">
        <property name="palette">
         <palette>
          <active>
@@ -393,9 +374,9 @@
    <widget class="QWidget" name="verticalLayoutWidget_7">
     <property name="geometry">
      <rect>
-      <x>320</x>
-      <y>220</y>
-      <width>155</width>
+      <x>300</x>
+      <y>240</y>
+      <width>181</width>
       <height>53</height>
      </rect>
     </property>
@@ -449,7 +430,7 @@
     <property name="geometry">
      <rect>
       <x>60</x>
-      <y>310</y>
+      <y>330</y>
       <width>411</width>
       <height>31</height>
      </rect>
@@ -573,9 +554,9 @@ color: rgb(238, 238, 236);</string>
    <widget class="QWidget" name="horizontalLayoutWidget_3">
     <property name="geometry">
      <rect>
-      <x>190</x>
-      <y>80</y>
-      <width>151</width>
+      <x>300</x>
+      <y>120</y>
+      <width>181</width>
       <height>31</height>
      </rect>
     </property>
@@ -589,6 +570,9 @@ color: rgb(238, 238, 236);</string>
      </item>
      <item>
       <widget class="QRadioButton" name="radio_male">
+       <property name="layoutDirection">
+        <enum>Qt::LeftToRight</enum>
+       </property>
        <property name="text">
         <string>Male</string>
        </property>
@@ -657,7 +641,7 @@ color: rgb(238, 238, 236);</string>
         <cursorShape>WhatsThisCursor</cursorShape>
        </property>
        <property name="toolTip">
-        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:9pt; color:#cc0000;&quot;&gt;If you don't know your body fat % leave this blank and select checkbox below to approximate&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:9pt; color:#cc0000;&quot;&gt;If you don't know your body fat % leave this blank and select the checkbox below to approximate it.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
        <property name="text">
         <string>Body Fat %</string>
@@ -669,121 +653,31 @@ color: rgb(238, 238, 236);</string>
      </item>
     </layout>
    </widget>
-   <widget class="QWidget" name="verticalLayoutWidget">
-    <property name="geometry">
-     <rect>
-      <x>40</x>
-      <y>250</y>
-      <width>201</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <layout class="QVBoxLayout" name="verticalLayout">
-     <item>
-      <widget class="QCheckBox" name="checkBox">
-       <property name="font">
-        <font>
-         <family>DejaVu Sans Mono</family>
-         <pointsize>9</pointsize>
-         <italic>true</italic>
-        </font>
-       </property>
-       <property name="layoutDirection">
-        <enum>Qt::RightToLeft</enum>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">color: rgb(85, 87, 83);</string>
-       </property>
-       <property name="text">
-        <string>Approximate body Fat %</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </widget>
    <widget class="QWidget" name="verticalLayoutWidget_2">
     <property name="geometry">
      <rect>
-      <x>170</x>
-      <y>410</y>
-      <width>301</width>
-      <height>71</height>
+      <x>140</x>
+      <y>420</y>
+      <width>331</width>
+      <height>31</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout_3">
      <item>
-      <widget class="QFrame" name="tdee_display">
+      <widget class="QTextBrowser" name="lbm_display">
        <property name="font">
         <font>
-         <family>DejaVu Sans Mono</family>
-         <pointsize>12</pointsize>
-         <weight>75</weight>
-         <bold>true</bold>
-        </font>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">color: rgb(46, 52, 54);</string>
-       </property>
-       <property name="frameShape">
-        <enum>QFrame::WinPanel</enum>
-       </property>
-       <property name="frameShadow">
-        <enum>QFrame::Raised</enum>
-       </property>
-       <property name="midLineWidth">
-        <number>0</number>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QFrame" name="lbm_display">
-       <property name="font">
-        <font>
-         <family>DejaVu Sans Mono</family>
-         <pointsize>12</pointsize>
-         <weight>9</weight>
+         <family>Dyuthi</family>
+         <pointsize>13</pointsize>
          <italic>false</italic>
-         <bold>false</bold>
         </font>
        </property>
+       <property name="acceptDrops">
+        <bool>false</bool>
+       </property>
        <property name="styleSheet">
-        <string notr="true">color: rgb(46, 52, 54);
-font: 75 12pt &quot;DejaVu Sans Mono&quot;;</string>
-       </property>
-       <property name="frameShape">
-        <enum>QFrame::WinPanel</enum>
-       </property>
-       <property name="frameShadow">
-        <enum>QFrame::Raised</enum>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </widget>
-   <widget class="QWidget" name="verticalLayoutWidget_3">
-    <property name="geometry">
-     <rect>
-      <x>170</x>
-      <y>490</y>
-      <width>301</width>
-      <height>101</height>
-     </rect>
-    </property>
-    <layout class="QVBoxLayout" name="verticalLayout_4">
-     <item>
-      <widget class="QFrame" name="macros_display">
-       <property name="styleSheet">
-        <string notr="true">font: 75 12pt &quot;DejaVu Sans Mono&quot;;
-color: rgb(46, 52, 54);</string>
-       </property>
-       <property name="frameShape">
-        <enum>QFrame::WinPanel</enum>
-       </property>
-       <property name="frameShadow">
-        <enum>QFrame::Raised</enum>
-       </property>
-       <property name="midLineWidth">
-        <number>0</number>
+        <string notr="true">background-color: rgb(211, 215, 207);
+color: rgb(52, 101, 164);</string>
        </property>
       </widget>
      </item>
@@ -792,9 +686,9 @@ color: rgb(46, 52, 54);</string>
    <widget class="QWidget" name="verticalLayoutWidget_4">
     <property name="geometry">
      <rect>
-      <x>40</x>
-      <y>410</y>
-      <width>101</width>
+      <x>20</x>
+      <y>420</y>
+      <width>91</width>
       <height>71</height>
      </rect>
     </property>
@@ -830,9 +724,9 @@ color: rgb(46, 52, 54);</string>
    <widget class="QWidget" name="verticalLayoutWidget_5">
     <property name="geometry">
      <rect>
-      <x>40</x>
-      <y>489</y>
-      <width>101</width>
+      <x>20</x>
+      <y>499</y>
+      <width>91</width>
       <height>101</height>
      </rect>
     </property>
@@ -853,12 +747,152 @@ Macros:</string>
      </item>
     </layout>
    </widget>
+   <widget class="QWidget" name="verticalLayoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>250</y>
+      <width>221</width>
+      <height>52</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <widget class="QCheckBox" name="approx_bodyfat">
+       <property name="font">
+        <font>
+         <family>Ubuntu Mono</family>
+         <pointsize>11</pointsize>
+         <weight>50</weight>
+         <italic>false</italic>
+         <bold>false</bold>
+        </font>
+       </property>
+       <property name="layoutDirection">
+        <enum>Qt::RightToLeft</enum>
+       </property>
+       <property name="autoFillBackground">
+        <bool>false</bool>
+       </property>
+       <property name="text">
+        <string>Approximate Body Fat %</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="active_job">
+       <property name="font">
+        <font>
+         <family>Ubuntu Mono</family>
+         <pointsize>11</pointsize>
+         <weight>50</weight>
+         <italic>false</italic>
+         <bold>false</bold>
+        </font>
+       </property>
+       <property name="layoutDirection">
+        <enum>Qt::RightToLeft</enum>
+       </property>
+       <property name="autoFillBackground">
+        <bool>false</bool>
+       </property>
+       <property name="text">
+        <string>Physically Active Job</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>240</x>
+      <y>390</y>
+      <width>55</width>
+      <height>18</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Dyuthi</family>
+      <pointsize>14</pointsize>
+      <weight>50</weight>
+      <italic>true</italic>
+      <bold>false</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(52, 101, 164);</string>
+    </property>
+    <property name="text">
+     <string>Results</string>
+    </property>
+   </widget>
+   <widget class="QWidget" name="verticalLayoutWidget_8">
+    <property name="geometry">
+     <rect>
+      <x>140</x>
+      <y>460</y>
+      <width>331</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout_5">
+     <item>
+      <widget class="QTextBrowser" name="tdee_display">
+       <property name="font">
+        <font>
+         <family>Dyuthi</family>
+         <pointsize>13</pointsize>
+         <italic>false</italic>
+        </font>
+       </property>
+       <property name="acceptDrops">
+        <bool>false</bool>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(211, 215, 207);
+color: rgb(52, 101, 164);</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QWidget" name="verticalLayoutWidget_9">
+    <property name="geometry">
+     <rect>
+      <x>140</x>
+      <y>500</y>
+      <width>331</width>
+      <height>101</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout_8">
+     <item>
+      <widget class="QTextBrowser" name="macros_display">
+       <property name="font">
+        <font>
+         <family>Dyuthi</family>
+         <pointsize>13</pointsize>
+         <italic>false</italic>
+        </font>
+       </property>
+       <property name="acceptDrops">
+        <bool>false</bool>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(211, 215, 207);
+color: rgb(52, 101, 164);</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <tabstops>
-  <tabstop>activeJob</tabstop>
-  <tabstop>workout_freq</tabstop>
+  <tabstop>exercise_freq</tabstop>
   <tabstop>calculate_button</tabstop>
   <tabstop>reset_button</tabstop>
   <tabstop>exit_button</tabstop>

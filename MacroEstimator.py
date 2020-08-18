@@ -22,10 +22,7 @@ class Person:
             self.age = age
         else:
             raise ValueError('Cannot take negative values!')
-        if gender.lower() in ['male', 'female']:
-            self.gender = gender.lower()
-        else:
-            raise TypeError('Only male/female values are accepted')
+        self.gender = gender
         self.body_fat = body_fat
 
     def __str__(self):
@@ -69,20 +66,28 @@ class Person:
 
 
 class Diet():
-    """[summary]
-    
+    """Creates a distribution of the macros in grams and kcal based on a goal
+    class uses Person class to approximate various indexed and diet type.
+
+    :param execise_frequency: how many days of exercise per week.
+    :type execise_frequency: str
+    :param active_job: If a person holds physically active job
+    :type active_job: boolean
+    :param goal: what person is trying to achieve with the diet
+    :type goal: str
+    :param person: takes a Person object
+    :type person: Person
     """
 
     PROTEIN_KCAL = 4
     CARBS_KCAL = 4
     FATS_KCAL = 9
 
-    def __init__(self, exercise_frequency, active_job, goal, *args):
-        weight, height, age, gender, body_fat = args
-        self.person = Person(weight, height, age, gender, body_fat)
+    def __init__(self, person, exercise_frequency, active_job, goal):
+        self.person = person
         self.exercise_frequency = exercise_frequency
         self.active_job = active_job
-        self.goal = goal.lower()
+        self.goal = goal
         # We initialy set macro variables equal to zero
         self.protein, self.carbs, self.fats, self.total = 0, 0, 0, 0
 
