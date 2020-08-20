@@ -5,6 +5,7 @@ from PyQt5.QtCore import *
 from MacroEstimator import Person, Diet
 
 class Ui(QMainWindow):
+    """UI window"""
 
     def __init__(self):
         super(Ui, self).__init__()
@@ -34,7 +35,7 @@ class Ui(QMainWindow):
         self.check_bodyfat = self.findChild(QCheckBox, 'approx_bodyfat')
         self.check_bodyfat.stateChanged.connect(self.change_approx_bodyfat_state)
 
-        # Set original values which will be changed based on the selection
+        # Set original values which will be changed based on the user selection
         self.active_job = False
         self.approx_bodyfat = False
         self.gender = None
@@ -49,7 +50,7 @@ class Ui(QMainWindow):
         self.exercise = self.findChild(QComboBox, 'exercise_freq')
         self.goal = self.findChild(QComboBox, 'goal')
 
-        # Text box for to print output
+        # Text box to print calculated output
         self.tmb_display = self.findChild(QTextBrowser, 'lbm_display')
         self.tdee_display = self.findChild(QTextBrowser, 'tdee_display')
         self.macros_display = self.findChild(QTextBrowser, 'macros_display')
@@ -57,12 +58,16 @@ class Ui(QMainWindow):
         self.show()
 
     def change_active_job_state(self, state):
+        """
+        Changes the status of `activejob` variable based on user selection
+        """
         if state == Qt.Checked:
             self.active_job = True
         else:
             self.active_job = False
     
     def change_approx_bodyfat_state(self, state):
+        """Checks if body fat % needs to be approximated"""
         if state == Qt.Checked:
             self.approx_bodyfat = True
         else:
@@ -75,6 +80,7 @@ class Ui(QMainWindow):
         if selected: self.gender = 'female'
 
     def create_diet(self):
+        """Creates a Diet object for further calculations"""
         if self.approx_bodyfat == True:
             person = Person(float(self.weight.text()),
                             float(self.height.text()),
@@ -95,6 +101,7 @@ class Ui(QMainWindow):
                 )
 
     def create_macros_plan(self, diet):
+        """Creates a macros diet plan based on fitness goal"""
         if self.goal == 'Gain Weight':
             return diet.calculate_macros_gain()
         elif self.goal == 'Lose Weight':
@@ -109,6 +116,7 @@ class Ui(QMainWindow):
         return diet.person.lean_body_mass()
 
     def print_results(self):
+        """Outputs calculated results to the user"""
         if self.gender == None:
             self.on_click()
         elif len(self.height.text()) == 0 or len(self.weight.text()) == 0 or len(self.age.text()) == 0:
@@ -126,14 +134,17 @@ class Ui(QMainWindow):
                 self.create_macros_plan(diet)
                 self.macros_display.setText(diet.__str__())
             except:
+                # If something is wrong pop up the warning window
                 self.on_click()
 
     @pyqtSlot()
     def on_click(self):
+        """Pops up warning message"""
         QMessageBox.warning(
             self, "Value Error", "Please correct the entered values", QMessageBox.Ok)
 
     def clear_inputs(self):
+        """Clears user input/output values from text boxes"""
         self.height.clear()
         self.weight.clear()
         self.age.clear()
