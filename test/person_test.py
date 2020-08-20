@@ -11,7 +11,7 @@ class TestPerson(unittest.TestCase):
     
     @classmethod
     def setUpClass(cls):
-        cls.male1 = Person(180, 6, 31, 'Male')
+        cls.male1 = Person(180, 6, 31, 'male')
 
     def test_person_object(self):
         self.assertIsInstance(self.male1, Person)
@@ -42,7 +42,7 @@ class TestPerson(unittest.TestCase):
         self.assertEqual(round(self.male1.lean_body_mass(), 1), 143.8, msg)
 
     def test_basal_metabolic_rate(self):
-        male2 = Person(210, 6.5, 25, 'Male', 8)
+        male2 = Person(210, 6.5, 25, 'male', 8)
         female2 = Person(120, 5.2, 40, 'female', 22)
         msg = ">> BMR is incorrectly calculated <<"
 

@@ -22,7 +22,10 @@ class Person:
             self.age = age
         else:
             raise ValueError('Cannot take negative values!')
-        self.gender = gender
+        if gender.lower() not in ['male', 'female']:
+            raise TypeError('Please enter valid gender')
+        else:
+            self.gender = gender
         self.body_fat = body_fat
 
     def __str__(self):
