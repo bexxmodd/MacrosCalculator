@@ -96,15 +96,15 @@ class Diet():
         self.set_macros()
 
     def set_macros(self):
-        if self.goal == 'gain':
+        if self.goal == 'Gain Weight':
             self.protein = self.person.weight * self.PROTEIN_KCAL
             self.carbs = self.person.weight * 2 * self.CARBS_KCAL
             self.fats = self.person.weight * 0.45 * self.FATS_KCAL
-        elif self.goal == 'lose':
+        elif self.goal == 'Lose Weight':
             self.protein = self.person.weight * 1.4 * self.PROTEIN_KCAL
             self.carbs = self.person.weight * self.CARBS_KCAL
             self.fats = self.person.weight * 0.25 * self.FATS_KCAL
-        elif self.goal == 'maintain':
+        elif self.goal == 'Maintain Weight':
             self.protein = self.person.weight * self.PROTEIN_KCAL
             self.carbs = self.person.weight * 1.6 * self.CARBS_KCAL
             self.fats = self.person.weight * 0.35 * self.FATS_KCAL
@@ -139,7 +139,7 @@ class Diet():
         :return: protein, carbs, fats, totals: Returns macros as Kcal.
         :rtype: dict
         """
-        if self.goal == 'gain':
+        if self.goal == 'Gain Weight':
             tdee = self.total_daily_energy_expenditure()
             if tdee > self.total:
                 diff = tdee - self.total
@@ -164,7 +164,7 @@ class Diet():
         :return: protein, carbs, fats, totals: Returns macros as Kcal.
         :rtype: dict
         """
-        if self.goal == 'lose':
+        if self.goal == 'Lose Weight':
             tdee = self.total_daily_energy_expenditure()
             if tdee - self.total < 350:
                 diff = 350 - (tdee - self.total)
@@ -189,7 +189,7 @@ class Diet():
         :return: protein, carbs, fats, totals: Returns macros as Kcal.
         :rtype: dict
         """
-        if self.goal == 'maintain':
+        if self.goal == 'Maintain Weight':
             tdee = self.total_daily_energy_expenditure()
             if tdee > self.total:
                 diff = tdee - self.total

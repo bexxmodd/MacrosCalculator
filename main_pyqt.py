@@ -10,8 +10,6 @@ class Ui(QMainWindow):
         super(Ui, self).__init__()
         uic.loadUi('user_interface.ui', self)
 
-        self.diet = None
-
         # Locate Exit button and link close method to it
         self.exit_button = self.findChild(QPushButton, 'exit_button')
         self.exit_button.clicked.connect(lambda:self.close())
@@ -77,44 +75,67 @@ class Ui(QMainWindow):
         if selected: self.gender = 'female'
 
     def create_diet(self):
-        person = Person(float(self.weight.text()), float(self.height.text()), int(self.age.text()), self.gender, float(self.bodyfat.text()))
-        self.diet = Diet(person, self.exercise, self.active_job, self.approx_bodyfat)
-        self.diet.set_macros()
+        if self.approx_bodyfat == True:
+            person = Person(float(self.weight.text()),
+                            float(self.height.text()),
+                            int(self.age.text()),
+                            self.gender)
+            person.approximate_body_fat()
+            return Diet(
+                person, self.exercise.currentText(), self.active_job, self.goal.currentText()
+                )
+        elif self.approx_bodyfat == False:
+            person = Person(float(self.weight.text()),
+                            float(self.height.text()),
+                            int(self.age.text()),
+                            self.gender, 
+                            float(self.bodyfat.text()))
+            return Diet(
+                person, self.exercise.currentText(), self.active_job, self.goal.currentText()
+                )
 
     def create_macros_plan(self):
-        if self.goal == 'gain':
+        if self.goal == 'Gain Weight':
             return self.diet.calculate_macros_gain()
-        elif self.goal == 'lose':
+        elif self.goal == 'Lose Weight':
             return self.diet.calculate_macros_lose()
-        elif self.goal == 'maintain':
+        elif self.goal == 'Maintain Weight':
             return self.diet.calculate_macros_lose()
 
-    def create_tdee(self):
-        return self.diet.total_daily_energy_expenditure()
+    def create_tdee(self, diet):
+        return diet.total_daily_energy_expenditure()
 
-    def create_lbm(self):
-        return self.diet.person.lean_body_mass()
+    def create_lbm(self, diet):
+        return diet.person.lean_body_mass()
 
     def print_results(self):
-        self.create_diet()
-        lbm = self.create_lbm()
-        tdee = self.create_tdee()
-        self.lbm_display.setText(str(lbm))
-        self.tdee_display.setText(str(tdee))
-        self.macros_display.setText("hehe")
+        if self.gender == None:
+            self.on_click()
+        elif len(self.height.text()) == 0 or len(self.weight.text()) == 0 or len(self.age.text()) == 0:
+            self.on_click()
+        elif float(self.height.text()) < 0 or float(self.weight.text()) < 0 or float(self.age.text()) < 0:
+            self.on_click()
+        else:
+            diet = self.create_diet()
+            lbm = round(self.create_lbm(diet), 2)
+            tdee = round(self.create_tdee(diet), 2)
+            self.lbm_display.setText(str(lbm) + " lbs")
+            self.tdee_display.setText(str(tdee) + " kcal")
+            self.macros_display.setText("Soon!")
 
-    # @pyqtSlot()
-    # def on_click(self):
-    #     QMessageBox.information(self, 'Results', "TDEE: " + 'textbox_value' + "\n" \
-    #                         + 'TDEE: ' + "good\n" \
-    #                         + 'Daily: ',
-    #                         QMessageBox.Ok)
+    @pyqtSlot()
+    def on_click(self):
+        QMessageBox.warning(
+            self, "Value Error", "Please correct the entered values", QMessageBox.Ok)
 
     def clear_inputs(self):
         self.height.clear()
         self.weight.clear()
         self.age.clear()
         self.bodyfat.clear()
+        self.lbm_display.clear()
+        self.tdee_display.clear()
+        self.macros_display.clear()
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
