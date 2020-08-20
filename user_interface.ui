@@ -668,7 +668,7 @@ color: rgb(238, 238, 236);</string>
        <property name="font">
         <font>
          <family>Dyuthi</family>
-         <pointsize>13</pointsize>
+         <pointsize>14</pointsize>
          <italic>false</italic>
         </font>
        </property>
@@ -843,7 +843,7 @@ Macros:</string>
        <property name="font">
         <font>
          <family>Dyuthi</family>
-         <pointsize>13</pointsize>
+         <pointsize>14</pointsize>
          <italic>false</italic>
         </font>
        </property>
@@ -873,7 +873,7 @@ color: rgb(52, 101, 164);</string>
        <property name="font">
         <font>
          <family>Dyuthi</family>
-         <pointsize>13</pointsize>
+         <pointsize>14</pointsize>
          <italic>false</italic>
         </font>
        </property>

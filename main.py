@@ -120,7 +120,7 @@ class Ui(QMainWindow):
                 diet = self.create_diet()
                 diet.set_macros()
                 lbm = round(self.create_lbm(diet), 2)
-                tdee = round(self.create_tdee(diet), 2)
+                tdee = round(self.create_tdee(diet))
                 self.lbm_display.setText(str(lbm) + " lbs")
                 self.tdee_display.setText(str(tdee) + " kcal")
                 self.create_macros_plan(diet)
