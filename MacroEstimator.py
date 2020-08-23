@@ -20,7 +20,7 @@ class Person:
                 height: float,
                 age: int,
                 gender: str,
-                body_fat=None) -> None:
+                body_fat: float = None) -> None:
         if all(v > 0 for v in [weight, height, age]):
             self.weight = weight
             self.height = height
