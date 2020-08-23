@@ -76,9 +76,9 @@ Project is using two Python packages:
 
 ----
 ## Release History
-* v1.0
+* `v1.0`
   * New version with PyQT GUI and Body fat % apporximation tool
-* v0.5
+* `v0.5`
   * First functional beta version.
 
 ----

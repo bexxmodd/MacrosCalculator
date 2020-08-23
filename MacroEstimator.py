@@ -15,7 +15,12 @@ class Person:
     :type gender: string
     """
 
-    def __init__(self, weight, height, age, gender, body_fat = None):
+    def __init__(self,
+                weight: float,
+                height: float,
+                age: int,
+                gender: str,
+                body_fat=None) -> None:
         if all(v > 0 for v in [weight, height, age]):
             self.weight = weight
             self.height = height
@@ -28,31 +33,32 @@ class Person:
             self.gender = gender
         self.body_fat = body_fat
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f'Weight:{self.weight}lbs Height:{self.height}ft Age:{self.age} Gender:{self.gender}'
     
     def set_body_fat(self):
         self.approximate_body_fat()
 
-    def approximate_body_fat(self):
-        """Approximates body fat % based on given weight, height, age"""
+    def approximate_body_fat(self) -> float:
+        """Approximates body fat % based on given weight, height, age."""
         if self.gender == 'female':
             self.body_fat = (1.2 * self.body_mass_index() * 100) + (0.23 * self.age) - 5.4
         elif self.gender == 'male':
             self.body_fat = (1.2 * self.body_mass_index() * 100) + (0.23 * self.age) - 16.2
 
-    def body_mass_index(self):
-        """BMI is a measure of body fat based on height and weight that applies to adult men & women"""
+    def body_mass_index(self) -> float:
+        """BMI is a measure of body fat based on height
+        and weight that applies to adult men & women."""
         return round((self.weight / (self.height * 12) ** 2) * 7, 4)
 
-    def lean_body_mass(self):
+    def lean_body_mass(self) -> float:
         """
         Lean body mass (LBM) is a part of body composition that is defined
         as the difference between total body weight and body fat weight.
         """
         return self.weight * (1 - self.body_fat / 100)
 
-    def basal_metabolic_rate(self):
+    def basal_metabolic_rate(self) -> float:
         """BMR is the number of calories required to keep your body functioning at rest.
         
         BMR is also known as your body's metabolism; therefore, any increase
@@ -86,7 +92,11 @@ class Diet():
     CARBS_KCAL = 4
     FATS_KCAL = 9
 
-    def __init__(self, person, exercise_frequency, active_job, goal):
+    def __init__(self,
+                person: Person,
+                exercise_frequency: str,
+                active_job: bool,
+                goal: str) -> None:
         self.person = person
         self.exercise_frequency = exercise_frequency
         self.active_job = active_job
@@ -94,11 +104,11 @@ class Diet():
         # We initialy set macro variables equal to zero
         self.protein, self.carbs, self.fats, self.total = 0, 0, 0, 0
 
-    def set_goal(self, goal):
+    def set_goal(self, goal: str) -> None:
         self.goal = goal.lower()
         self.set_macros()
 
-    def set_macros(self):
+    def set_macros(self) -> None:
         if self.goal == 'Gain Weight':
             self.protein = self.person.weight * self.PROTEIN_KCAL
             self.carbs = self.person.weight * 2 * self.CARBS_KCAL
@@ -113,7 +123,7 @@ class Diet():
             self.fats = self.person.weight * 0.35 * self.FATS_KCAL
         self.total = sum([self.protein, self.carbs, self.fats])
 
-    def total_daily_energy_expenditure(self):
+    def total_daily_energy_expenditure(self) -> float:
         """
         TDEE is an estimation of how calories burned per day
         when exercise and job activity is taken into account.
@@ -136,7 +146,7 @@ class Diet():
         elif self.active_job == False:
             return tdee
 
-    def calculate_macros_gain(self):
+    def calculate_macros_gain(self) -> dict:
         """Calculates macros (Proteins, Carbs, Fats) for the muscle gain.
         ...
         :return: protein, carbs, fats, totals: Returns macros as Kcal.
@@ -161,7 +171,7 @@ class Diet():
         else:
             raise TypeError("This method is only for users who want to gain weight")
 
-    def calculate_macros_lose(self):
+    def calculate_macros_lose(self) -> dict:
         """Calculates macros (Proteins, Carbs, Fats) for the weight lose.
         ...
         :return: protein, carbs, fats, totals: Returns macros as Kcal.
@@ -186,7 +196,7 @@ class Diet():
         else:
             raise TypeError("This method is only for users who want to lose weight")
 
-    def calculate_macros_maintain(self):
+    def calculate_macros_maintain(self) -> dict:
         """Calculates macros (Proteins, Carbs, Fats) to maintain weight.
         ...
         :return: protein, carbs, fats, totals: Returns macros as Kcal.
@@ -218,20 +228,20 @@ class Diet():
         else:
             raise TypeError("This method is only for users who want to maintain weight")
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f'Protein: \t{round(self.protein / self.PROTEIN_KCAL, 1)} g. \t{int(self.protein)} kcal.\
             \nCarbs: \t{round(self.carbs / self.CARBS_KCAL, 1)} g. \t{int(self.carbs)} kcal.\
             \nFats: \t{round(self.fats /self.FATS_KCAL, 1)} g. \t{int(self.fats)} kcal.\
             \nTotal: \t\t{int(self.total)} kcal.'
 
-    def get_protein(self):
+    def get_protein(self) -> float:
         return self.protein
 
-    def get_carbs(self):
+    def get_carbs(self) -> float:
         return self.carbs
 
-    def get_fats(self):
+    def get_fats(self) -> float:
         return self.fats
 
-    def get_total(self):
+    def get_total(self) -> float:
         return self.total
