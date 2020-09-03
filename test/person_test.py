@@ -33,8 +33,6 @@ class TestPerson(unittest.TestCase):
             person1 = (Person(115, -5.4, 27, 'male', 19))
         with self.assertRaises(ValueError):
             person1 = (Person(115, 5.4, -27, 'male', 19))
-        with self.assertRaises(TypeError):
-            person1 = (Person(115, 5.4, 27, 'dog', 19))
 
     def test_lean_body_mass(self):
         msg = ">> LBM is incorrectly calcualted <<"
@@ -57,10 +55,6 @@ class TestPerson(unittest.TestCase):
                         178.3981, msg)
         self.assertEqual(round(female3.protein_requirement(), 4),
                         112.9787, msg)
-
-    @classmethod
-    def teadDownClass(cls):
-        cls.male1.destroy()
 
 if __name__ == '__main__':
     unittest.main()

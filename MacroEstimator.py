@@ -27,19 +27,13 @@ class Person:
             self.age = age
         else:
             raise ValueError('Cannot take negative values!')
-        if gender.lower() not in ['male', 'female']:
-            raise TypeError('Please enter valid gender')
-        else:
-            self.gender = gender
+        self.gender = gender
         self.body_fat = body_fat
-
-    def __str__(self) -> str:
-        return f'Weight:{self.weight}lbs Height:{self.height}ft Age:{self.age} Gender:{self.gender}'
     
     def set_body_fat(self):
         self.approximate_body_fat()
 
-    def approximate_body_fat(self) -> float:
+    def approximate_body_fat(self) -> None:
         """Approximates body fat % based on given weight, height, age."""
         if self.gender == 'female':
             self.body_fat = (1.2 * self.body_mass_index() * 100) + (0.23 * self.age) - 5.4
@@ -52,14 +46,12 @@ class Person:
         return round((self.weight / (self.height * 12) ** 2) * 7, 4)
 
     def lean_body_mass(self) -> float:
-        """
-        Lean body mass (LBM) is a part of body composition that is defined
-        as the difference between total body weight and body fat weight.
-        """
+        """LBM is a part of body composition that is defined
+        as the difference between body weight and body fat weight."""
         return self.weight * (1 - self.body_fat / 100)
 
     def basal_metabolic_rate(self) -> float:
-        """BMR is the number of calories required to keep your body functioning at rest.
+        """BMR is calories required to keep your body functioning at rest.
         
         BMR is also known as your body's metabolism; therefore, any increase
         to your metabolic weight, such as exercise, will increase your BMR.
@@ -75,8 +67,8 @@ class Person:
 
 
 class Diet():
-    """Creates a distribution of the macros in grams and kcal based on a goal
-    class uses Person class to approximate various indexed and diet type.
+    """Creates a dispersal of the macros based on a fitness goal.
+    Uses Person class to approximate various indexed and diet type.
 
     :param execise_frequency: how many days of exercise per week.
     :type execise_frequency: str
@@ -97,11 +89,15 @@ class Diet():
                 exercise_frequency: str,
                 active_job: bool,
                 goal: str) -> None:
-        self.person = person
+        # Make sure first arg is Person object
+        if isinstance(person, Person):
+            self.person = person
+        else:
+            raise TypeError("Only takes Person object")
         self.exercise_frequency = exercise_frequency
         self.active_job = active_job
         self.goal = goal
-        # We initialy set macro variables equal to zero
+        # Initially macro variables are set equal to zero
         self.protein, self.carbs, self.fats, self.total = 0, 0, 0, 0
 
     def set_goal(self, goal: str) -> None:
@@ -124,8 +120,7 @@ class Diet():
         self.total = sum([self.protein, self.carbs, self.fats])
 
     def total_daily_energy_expenditure(self) -> float:
-        """
-        TDEE is an estimation of how calories burned per day
+        """TDEE is an estimation of calories burned per day,
         when exercise and job activity is taken into account.
         ...
         :return: BMR adjusted for the exercise amount.

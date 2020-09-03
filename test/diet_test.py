@@ -131,6 +131,7 @@ class TestPerson(unittest.TestCase):
         self.assertEqual(self.diet5.carbs, 768)
         self.assertEqual(self.diet5.fats, 378)
         self.assertEqual(self.diet5.total, 1626)
+    
 
 if __name__ == '__main__':
     unittest.main()

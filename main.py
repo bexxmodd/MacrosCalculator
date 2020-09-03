@@ -87,18 +87,20 @@ class Ui(QMainWindow):
                             int(self.age.text()),
                             self.gender)
             person.approximate_body_fat()
-            return Diet(
-                person, self.exercise.currentText(), self.active_job, self.goal.currentText()
-                )
+            return Diet(person,
+                        self.exercise.currentText(),
+                        self.active_job,
+                        self.goal.currentText())
         elif self.approx_bodyfat == False:
             person = Person(float(self.weight.text()),
                             float(self.height.text()),
                             int(self.age.text()),
                             self.gender, 
                             float(self.bodyfat.text()))
-            return Diet(
-                person, self.exercise.currentText(), self.active_job, self.goal.currentText()
-                )
+            return Diet(person,
+                        self.exercise.currentText(),
+                        self.active_job,
+                        self.goal.currentText())
 
     def create_macros_plan(self, diet: Diet) -> dict:
         """Creates a macros diet plan based on fitness goal"""
@@ -140,8 +142,10 @@ class Ui(QMainWindow):
     @pyqtSlot()
     def on_click(self) -> None:
         """Pops up warning message"""
-        QMessageBox.warning(
-            self, "Value Error", "Please correct the entered values", QMessageBox.Ok)
+        QMessageBox.warning(self,
+                            "Value Error",
+                            "Please correct the entered values",
+                            QMessageBox.Ok)
 
     def clear_inputs(self) -> None:
         """Clears user input/output values from text boxes"""
