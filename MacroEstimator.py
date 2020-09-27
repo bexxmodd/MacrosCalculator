@@ -1,54 +1,117 @@
 class Person:
-    """Person class creates an user object and computes its lean body mass
-    basal metabolic rate and protein requirement to maintain same weight.
-    
-    :param weight: body weight in pounds.
-    :type weight: int
-    :param height: height in feet.
-    :type height: int
-    :param body_fat: user's body fat as percentage,
-        e.i. if body fat is 15% of total weight enter 15.
-    :type body_fat: float, optional
-    :param age: user's age in years.
-    :type age: int
-    :param gender: gender of the user.
-    :type gender: string
-    """
+    """Person class creates an user object"""
 
-    def __init__(self,
-                weight: float,
-                height: float,
-                age: int,
-                gender: str,
-                body_fat: float = None) -> None:
-        if all(v > 0 for v in [weight, height, age]):
-            self.weight = weight
-            self.height = height
-            self.age = age
+    _weight = 0
+    _height = 0
+    _age = 0
+    _gender = 'male'
+    _body_fat = 0
+
+    def __init__(self):
+        return
+
+    @property
+    def weight(self) -> float:
+        return self._weight
+    
+    @weight.setter
+    def weight(self, weight: float):
+        self._weight = weight
+
+    @property
+    def height(self) -> float:
+        return self._weight
+
+    @height.setter
+    def height(self, height):
+        self._height = height
+    
+    @property
+    def age(self) -> int:
+        return self._age
+
+    @age.setter
+    def age(self, age: int) -> None:
+        self._age = age
+    
+    @property
+    def gender(self) -> str:
+        return self._gender
+    
+    @gender.setter
+    def gender(self, gender: str) -> None:
+        self._gender = gender
+    
+    @property
+    def body_fat(self) -> float:
+        return self._body_fat
+
+    @body_fat.setter
+    def body_fat(self, body_fat: float):
+        if body_fat:
+            self._body_fat = body_fat
         else:
-            raise ValueError('Cannot take negative values!')
-        self.gender = gender
-        self.body_fat = body_fat
-    
-    def set_body_fat(self):
-        self.approximate_body_fat()
-
-    def approximate_body_fat(self) -> None:
-        """Approximates body fat % based on given weight, height, age."""
-        if self.gender == 'female':
-            self.body_fat = (1.2 * self.body_mass_index() * 100) + (0.23 * self.age) - 5.4
-        elif self.gender == 'male':
-            self.body_fat = (1.2 * self.body_mass_index() * 100) + (0.23 * self.age) - 16.2
+            self._body_fat = self.approximate_body_fat()
 
     def body_mass_index(self) -> float:
         """BMI is a measure of body fat based on height
         and weight that applies to adult men & women."""
-        return round((self.weight / (self.height * 12) ** 2) * 7, 4)
+        return round((self._weight / (self._height * 12) ** 2) * 7, 4)
+
+    def approximate_body_fat(self) -> None:
+        """Approximates body fat % based on given weight, height, age."""
+        if self._gender == 'female':
+            self._body_fat = (1.2 * self.body_mass_index() * 100) + (0.23 * self._age) - 5.4
+        elif self._gender == 'male':
+            self._body_fat = (1.2 * self.body_mass_index() * 100) + (0.23 * self._age) - 16.2
+
+
+class Athlete(Person):
+    """Inherits main measures from Person.
+    Adds activity variables to the pack"""
+
+    _exercise_freq = 'Occasionally'
+    _active_job = False
+    _goal = 'Lose Weight'
+
+    @property
+    def exercise_freq(self) -> str:
+        return self._exercise_freq
+
+    @exercise_freq.setter
+    def exercise_freq(self, freq: str):
+        self._exercise_freq = freq
+
+    @property
+    def active_job(self) -> str:
+        return self._active_job
+
+    @active_job.setter
+    def active_job(self, job: str) -> None:
+        self._active_job = job
+    
+    @property
+    def goal(self) -> str:
+        return self._goal
+
+    @goal.setter
+    def goal(self, goal: str):
+        self._goal = goal
+
+    
+class Measurements():
+    """Calculate body measurements and indices of a Person"""
+
+    def __init__(self, person: Person=None):
+        if person is None:
+            self.person = Person()
+        else:
+            self.person = person
 
     def lean_body_mass(self) -> float:
         """LBM is a part of body composition that is defined
         as the difference between body weight and body fat weight."""
-        return self.weight * (1 - self.body_fat / 100)
+        return self.person.weight * (1 - self.person.body_fat / 100)
 
     def basal_metabolic_rate(self) -> float:
         """BMR is calories required to keep your body functioning at rest.
@@ -56,12 +119,12 @@ class Person:
         BMR is also known as your body's metabolism; therefore, any increase
         to your metabolic weight, such as exercise, will increase your BMR.
         """
-        if self.gender.lower() == 'male':
-            return 66 + (6.23 * self.weight) + (12.7 * self.height * 12) - (6.8 * self.age)
-        elif self.gender.lower() == 'female':
-            return 665 + (4.35 * self.weight) + (4.7 * self.height * 12) - (4.7 * self.age)
+        if self.person.gender == 'male':
+            return 66 + (6.23 * self.person.weight) + (12.7 * self.person.height * 12) - (6.8 * self.person.age)
+        elif self.person.gender == 'female':
+            return 665 + (4.35 * self.person.weight) + (4.7 * self.person.height * 12) - (4.7 * self.person.age)
 
-    def protein_requirement(self):
+    def protein_requirement(self) -> float:
         """Minimum protein amount (in grams) needed for your body weight"""
         return self.lean_body_mass() / 2.20462 * 2.25
 
@@ -69,15 +132,6 @@ class Person:
 class Diet():
     """Creates a dispersal of the macros based on a fitness goal.
     Uses Person class to approximate various indexed and diet type.
-
-    :param execise_frequency: how many days of exercise per week.
-    :type execise_frequency: str
-    :param active_job: If a person holds physically active job
-    :type active_job: boolean
-    :param goal: what person is trying to achieve with the diet
-    :type goal: str
-    :param person: takes a Person object
-    :type person: Person
     """
 
     PROTEIN_KCAL = 4
@@ -85,38 +139,67 @@ class Diet():
     FATS_KCAL = 9
 
     def __init__(self,
-                person: Person,
-                exercise_frequency: str,
-                active_job: bool,
-                goal: str) -> None:
-        # Make sure first arg is Person object
-        if isinstance(person, Person):
-            self.person = person
+                athlete: Athlete = None) -> None:
+        if athlete is None:
+            self.athlete = Athlete()
         else:
-            raise TypeError("Only takes Person object")
-        self.exercise_frequency = exercise_frequency
-        self.active_job = active_job
-        self.goal = goal
-        # Initially macro variables are set equal to zero
-        self.protein, self.carbs, self.fats, self.total = 0, 0, 0, 0
+            self.athlete = athlete
 
-    def set_goal(self, goal: str) -> None:
-        self.goal = goal.lower()
-        self.set_macros()
+        # Initially macro variables are set to zero
+        self.protein = 0
+        self.carbs = 0
+        self.fats = 0
+        self.total = 0
+        
+    @property
+    def set_protein(self):
+        return self.protein
+
+    @set_protein.setter
+    def set_protein(self, protein: float) -> None:
+        self.protein = protein
+
+    @property
+    def set_carbs(self):
+        return self.carbs
+
+    @set_carbs.setter
+    def set_carbs(self, carbs: float) -> None:
+        self.carbs = carbs
+
+    @property
+    def set_fats(self) -> float:
+        return self.fats
+
+    @set_fats.setter
+    def set_fats(self, fats: float) -> None:
+        self.fats = fats
+
+    @property
+    def set_total(self) -> float:
+        return self.total
+
+    @set_total.setter
+    def set_total(self, total: float) -> None:
+        self.total = total
 
     def set_macros(self) -> None:
-        if self.goal == 'Gain Weight':
-            self.protein = self.person.weight * self.PROTEIN_KCAL
-            self.carbs = self.person.weight * 2 * self.CARBS_KCAL
-            self.fats = self.person.weight * 0.45 * self.FATS_KCAL
-        elif self.goal == 'Lose Weight':
-            self.protein = self.person.weight * 1.4 * self.PROTEIN_KCAL
-            self.carbs = self.person.weight * self.CARBS_KCAL
-            self.fats = self.person.weight * 0.25 * self.FATS_KCAL
-        elif self.goal == 'Maintain Weight':
-            self.protein = self.person.weight * self.PROTEIN_KCAL
-            self.carbs = self.person.weight * 1.6 * self.CARBS_KCAL
-            self.fats = self.person.weight * 0.35 * self.FATS_KCAL
+        """Asign diet macro values based on a goal"""
+        if self.athlete.goal == 'Gain Weight':
+            self.protein = self.athlete.weight * self.PROTEIN_KCAL
+            self.carbs = self.athlete.weight * 2 * self.CARBS_KCAL
+            self.fats = self.athlete.weight * 0.45 * self.FATS_KCAL
+
+        elif self.athlete.goal == 'Lose Weight':
+            self.protein = self.athlete.weight * 1.4 * self.PROTEIN_KCAL
+            self.carbs = self.athlete.weight * self.CARBS_KCAL
+            self.fats = self.athlete.weight * 0.25 * self.FATS_KCAL
+
+        elif self.athlete.goal == 'Maintain Weight':
+            self.protein = self.athlete.weight * self.PROTEIN_KCAL
+            self.carbs = self.athlete.weight * 1.6 * self.CARBS_KCAL
+            self.fats = self.athlete.weight * 0.35 * self.FATS_KCAL
+
         self.total = sum([self.protein, self.carbs, self.fats])
 
     def total_daily_energy_expenditure(self) -> float:
@@ -126,20 +209,22 @@ class Diet():
         :return: BMR adjusted for the exercise amount.
         :rtype: int
         """
+        m = Measurements(self.athlete)
         tdee = 0
-        if self.exercise_frequency == 'Occasionally':
-            tdee = self.person.basal_metabolic_rate() * 1.2
-        elif self.exercise_frequency == '1 to 2 Day':
-            tdee = self.person.basal_metabolic_rate() * 1.375
-        elif self.exercise_frequency == '3 to 4 days':
-            tdee = self.person.basal_metabolic_rate() * 1.55
-        elif self.exercise_frequency == '5 to 7 days':
-            tdee = self.person.basal_metabolic_rate() * 1.725
+
+        if self.athlete.exercise_freq == 'Occasionally':
+            tdee = m.basal_metabolic_rate() * 1.2
+        elif self.athlete.exercise_freq == '1 to 2 Day':
+            tdee = m.basal_metabolic_rate() * 1.375
+        elif self.athlete.exercise_freq == '3 to 4 days':
+            tdee = m.basal_metabolic_rate() * 1.55
+        elif self.athlete.exercise_freq == '5 to 7 days':
+            tdee = m.basal_metabolic_rate() * 1.725
+
         # Additional multiplier if the user has a physically active job.
-        if self.active_job == True:
+        if self.athlete.active_job == True:
             return tdee * 1.15
-        elif self.active_job == False:
-            return tdee
+        return tdee
 
     def calculate_macros_gain(self) -> dict:
         """Calculates macros (Proteins, Carbs, Fats) for the muscle gain.
@@ -164,13 +249,13 @@ class Diet():
             }
             return diet
         else:
-            raise TypeError("This method is only for users who want to gain weight")
+            raise TypeError(
+                "This method is only for users who want to gain weight"
+            )
 
     def calculate_macros_lose(self) -> dict:
-        """Calculates macros (Proteins, Carbs, Fats) for the weight lose.
-        ...
-        :return: protein, carbs, fats, totals: Returns macros as Kcal.
-        :rtype: dict
+        """
+        Calculates macros (Proteins, Carbs, Fats) for the weight lose.
         """
         if self.goal == 'Lose Weight':
             tdee = self.total_daily_energy_expenditure()
@@ -189,7 +274,9 @@ class Diet():
             }
             return diet
         else:
-            raise TypeError("This method is only for users who want to lose weight")
+            raise TypeError(
+                "This method is only for users who want to lose weight"
+            )
 
     def calculate_macros_maintain(self) -> dict:
         """Calculates macros (Proteins, Carbs, Fats) to maintain weight.
@@ -221,7 +308,9 @@ class Diet():
             }
             return diet
         else:
-            raise TypeError("This method is only for users who want to maintain weight")
+            raise TypeError(
+                "This method is only for users who want to maintain weight"
+            )
 
     def __str__(self) -> str:
         return f'Protein: \t{round(self.protein / self.PROTEIN_KCAL, 1)} g. \t{int(self.protein)} kcal.\
@@ -229,14 +318,15 @@ class Diet():
             \nFats: \t{round(self.fats /self.FATS_KCAL, 1)} g. \t{int(self.fats)} kcal.\
             \nTotal: \t\t{int(self.total)} kcal.'
 
-    def get_protein(self) -> float:
-        return self.protein
 
-    def get_carbs(self) -> float:
-        return self.carbs
-
-    def get_fats(self) -> float:
-        return self.fats
-
-    def get_total(self) -> float:
-        return self.total
+if __name__ == '__main__':
+    a = Diet()
+    a.athlete.height=6.0
+    a.athlete.weight=175
+    a.athlete.age=30
+    a.athlete.gender='male'
+    a.athlete.approximate_body_fat()
+    a.set_macros()
+    a.goal = 'Gain Weight'
+    a.active_job = False
+    print(a.calculate_macros_gain())
