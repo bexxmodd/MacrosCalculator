@@ -8,7 +8,7 @@
     <x>0</x>
     <y>0</y>
     <width>529</width>
-    <height>653</height>
+    <height>454</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -33,19 +33,6 @@
       <y>60</y>
       <width>531</width>
       <height>21</height>
-     </rect>
-    </property>
-    <property name="orientation">
-     <enum>Qt::Horizontal</enum>
-    </property>
-   </widget>
-   <widget class="Line" name="line2">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>370</y>
-      <width>531</width>
-      <height>20</height>
      </rect>
     </property>
     <property name="orientation">
@@ -429,13 +416,26 @@
    <widget class="QWidget" name="horizontalLayoutWidget">
     <property name="geometry">
      <rect>
-      <x>60</x>
-      <y>330</y>
-      <width>411</width>
+      <x>10</x>
+      <y>350</y>
+      <width>511</width>
       <height>32</height>
      </rect>
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
      <item>
       <widget class="QPushButton" name="calculate_button">
        <property name="font">
@@ -502,6 +502,19 @@ color: rgb(238, 238, 236);</string>
         <string>Exit</string>
        </property>
       </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
      </item>
     </layout>
    </widget>
@@ -653,100 +666,6 @@ color: rgb(238, 238, 236);</string>
      </item>
     </layout>
    </widget>
-   <widget class="QWidget" name="verticalLayoutWidget_2">
-    <property name="geometry">
-     <rect>
-      <x>140</x>
-      <y>420</y>
-      <width>331</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <layout class="QVBoxLayout" name="verticalLayout_3">
-     <item>
-      <widget class="QTextBrowser" name="lbm_display">
-       <property name="font">
-        <font>
-         <family>Dyuthi</family>
-         <pointsize>14</pointsize>
-         <italic>false</italic>
-        </font>
-       </property>
-       <property name="acceptDrops">
-        <bool>false</bool>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">background-color: rgb(211, 215, 207);
-color: rgb(52, 101, 164);</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </widget>
-   <widget class="QWidget" name="verticalLayoutWidget_4">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>420</y>
-      <width>91</width>
-      <height>71</height>
-     </rect>
-    </property>
-    <layout class="QVBoxLayout" name="verticalLayout_9">
-     <item>
-      <widget class="QLabel" name="lbm_label">
-       <property name="cursor">
-        <cursorShape>WhatsThisCursor</cursorShape>
-       </property>
-       <property name="toolTip">
-        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:'SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace'; font-size:9pt; color:#032f62;&quot;&gt;Lean Body Mass (LBM) is a part of body composition that is defined\nas the difference between total body weight and body fat weight.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-       </property>
-       <property name="text">
-        <string>LMB:</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLabel" name="tdee_label">
-       <property name="cursor">
-        <cursorShape>WhatsThisCursor</cursorShape>
-       </property>
-       <property name="toolTip">
-        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:'SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace'; font-size:9pt; color:#032f62;&quot;&gt;Total Daily Energy Expenditures (TDEE) is an estimation of how\ncalories burned per day when exercise is taken into account.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-       </property>
-       <property name="text">
-        <string>TDEE:</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </widget>
-   <widget class="QWidget" name="verticalLayoutWidget_5">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>499</y>
-      <width>91</width>
-      <height>101</height>
-     </rect>
-    </property>
-    <layout class="QVBoxLayout" name="verticalLayout_10">
-     <item>
-      <widget class="QLabel" name="daily_macros_label">
-       <property name="cursor">
-        <cursorShape>WhatsThisCursor</cursorShape>
-       </property>
-       <property name="toolTip">
-        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:'SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace'; font-size:12px; color:#032f62;&quot;&gt;Portion of each macro element in the daily diet&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-       </property>
-       <property name="text">
-        <string>Daily
-Macros:</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </widget>
    <widget class="QWidget" name="verticalLayoutWidget">
     <property name="geometry">
      <rect>
@@ -803,99 +722,11 @@ Macros:</string>
      </item>
     </layout>
    </widget>
-   <widget class="QLabel" name="label">
-    <property name="geometry">
-     <rect>
-      <x>240</x>
-      <y>390</y>
-      <width>55</width>
-      <height>18</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>Dyuthi</family>
-      <pointsize>14</pointsize>
-      <weight>50</weight>
-      <italic>true</italic>
-      <bold>false</bold>
-     </font>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">color: rgb(52, 101, 164);</string>
-    </property>
-    <property name="text">
-     <string>Results</string>
-    </property>
-   </widget>
-   <widget class="QWidget" name="verticalLayoutWidget_8">
-    <property name="geometry">
-     <rect>
-      <x>140</x>
-      <y>460</y>
-      <width>331</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <layout class="QVBoxLayout" name="verticalLayout_5">
-     <item>
-      <widget class="QTextBrowser" name="tdee_display">
-       <property name="font">
-        <font>
-         <family>Dyuthi</family>
-         <pointsize>14</pointsize>
-         <italic>false</italic>
-        </font>
-       </property>
-       <property name="acceptDrops">
-        <bool>false</bool>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">background-color: rgb(211, 215, 207);
-color: rgb(52, 101, 164);</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </widget>
-   <widget class="QWidget" name="verticalLayoutWidget_9">
-    <property name="geometry">
-     <rect>
-      <x>140</x>
-      <y>500</y>
-      <width>331</width>
-      <height>101</height>
-     </rect>
-    </property>
-    <layout class="QVBoxLayout" name="verticalLayout_8">
-     <item>
-      <widget class="QTextBrowser" name="macros_display">
-       <property name="font">
-        <font>
-         <family>Dyuthi</family>
-         <pointsize>14</pointsize>
-         <italic>false</italic>
-        </font>
-       </property>
-       <property name="acceptDrops">
-        <bool>false</bool>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">background-color: rgb(211, 215, 207);
-color: rgb(52, 101, 164);</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </widget>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <tabstops>
   <tabstop>exercise_freq</tabstop>
-  <tabstop>calculate_button</tabstop>
-  <tabstop>reset_button</tabstop>
-  <tabstop>exit_button</tabstop>
  </tabstops>
  <resources/>
  <connections/>

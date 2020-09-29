@@ -51,8 +51,9 @@ class Person:
         if body_fat:
             self._body_fat = body_fat
         else:
-            self._body_fat = self.approximate_body_fat()
+            self._body_fat = self._approximate_body_fat()
 
+    @property
     def body_mass_index(self) -> float:
         """BMI is a measure of body fat based on height
         and weight that applies to adult men & women."""
@@ -61,9 +62,9 @@ class Person:
     def approximate_body_fat(self) -> None:
         """Approximates body fat % based on given weight, height, age."""
         if self._gender == 'female':
-            self._body_fat = (1.2 * self.body_mass_index() * 100) + (0.23 * self._age) - 5.4
+            self._body_fat = (1.2 * self.body_mass_index * 100) + (0.23 * self._age) - 5.4
         elif self._gender == 'male':
-            self._body_fat = (1.2 * self.body_mass_index() * 100) + (0.23 * self._age) - 16.2
+            self._body_fat = (1.2 * self.body_mass_index * 100) + (0.23 * self._age) - 16.2
 
 
 class Athlete(Person):
@@ -183,22 +184,22 @@ class Diet():
     def set_total(self, total: float) -> None:
         self.total = total
 
-    def set_macros(self) -> None:
+    def set_macros(self, goal: str, weight: float) -> None:
         """Asign diet macro values based on a goal"""
-        if self.athlete.goal == 'Gain Weight':
-            self.protein = self.athlete.weight * self.PROTEIN_KCAL
-            self.carbs = self.athlete.weight * 2 * self.CARBS_KCAL
-            self.fats = self.athlete.weight * 0.45 * self.FATS_KCAL
+        if goal == 'Gain Weight':
+            self.protein = weight * self.PROTEIN_KCAL
+            self.carbs = weight * 2 * self.CARBS_KCAL
+            self.fats = weight * 0.45 * self.FATS_KCAL
 
-        elif self.athlete.goal == 'Lose Weight':
-            self.protein = self.athlete.weight * 1.4 * self.PROTEIN_KCAL
-            self.carbs = self.athlete.weight * self.CARBS_KCAL
-            self.fats = self.athlete.weight * 0.25 * self.FATS_KCAL
+        elif goal == 'Lose Weight':
+            self.protein = weight * 1.4 * self.PROTEIN_KCAL
+            self.carbs = weight * self.CARBS_KCAL
+            self.fats = weight * 0.25 * self.FATS_KCAL
 
-        elif self.athlete.goal == 'Maintain Weight':
-            self.protein = self.athlete.weight * self.PROTEIN_KCAL
-            self.carbs = self.athlete.weight * 1.6 * self.CARBS_KCAL
-            self.fats = self.athlete.weight * 0.35 * self.FATS_KCAL
+        elif goal == 'Maintain Weight':
+            self.protein = weight * self.PROTEIN_KCAL
+            self.carbs = weight * 1.6 * self.CARBS_KCAL
+            self.fats = weight * 0.35 * self.FATS_KCAL
 
         self.total = sum([self.protein, self.carbs, self.fats])
 
@@ -326,7 +327,6 @@ if __name__ == '__main__':
     a.athlete.age=30
     a.athlete.gender='male'
     a.athlete.approximate_body_fat()
-    a.set_macros()
-    a.goal = 'Gain Weight'
-    a.active_job = False
-    print(a.calculate_macros_gain())
+    a.athlete.goal = 'Gain Weight'
+    a.set_macros(a.athlete.goal, a.athlete.weight)
+    print(a.total)
