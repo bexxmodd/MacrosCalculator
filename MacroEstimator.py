@@ -12,6 +12,7 @@ class Person:
 
     @property
     def weight(self) -> float:
+        """Weight in pounds"""
         return self._weight
     
     @weight.setter
@@ -20,6 +21,7 @@ class Person:
 
     @property
     def height(self) -> float:
+        """Height in feet"""
         return self._weight
 
     @height.setter
@@ -28,6 +30,7 @@ class Person:
     
     @property
     def age(self) -> int:
+        """Age in years"""
         return self._age
 
     @age.setter
@@ -36,6 +39,7 @@ class Person:
     
     @property
     def gender(self) -> str:
+        """Gender of a person"""
         return self._gender
     
     @gender.setter
@@ -44,6 +48,7 @@ class Person:
     
     @property
     def body_fat(self) -> float:
+        """Body fat percentage"""
         return self._body_fat
 
     @body_fat.setter
@@ -51,7 +56,7 @@ class Person:
         if body_fat:
             self._body_fat = body_fat
         else:
-            self._body_fat = self._approximate_body_fat()
+            self._body_fat = self.approximate_body_fat()
 
     @property
     def body_mass_index(self) -> float:
@@ -62,10 +67,10 @@ class Person:
     def approximate_body_fat(self) -> None:
         """Approximates body fat % based on given weight, height, age."""
         if self._gender == 'female':
-            self._body_fat = (1.2 * self.body_mass_index * 100)
+            self._body_fat = (1.2 * self.body_mass_index * 100) \
                             + (0.23 * self._age) - 5.4
         elif self._gender == 'male':
-            self._body_fat = (1.2 * self.body_mass_index * 100)
+            self._body_fat = (1.2 * self.body_mass_index * 100) \
                             + (0.23 * self._age) - 16.2
 
 
@@ -123,12 +128,12 @@ class Measurements():
         to your metabolic weight, such as exercise, will increase your BMR.
         """
         if self.person.gender == 'male':
-            return 66 + (6.23 * self.person.weight)
-                    + (12.7 * self.person.height * 12)
+            return 66 + (6.23 * self.person.weight) \
+                    + (12.7 * self.person.height * 12) \
                     - (6.8 * self.person.age)
         elif self.person.gender == 'female':
-            return 665 + (4.35 * self.person.weight)
-                    + (4.7 * self.person.height * 12)
+            return 665 + (4.35 * self.person.weight) \
+                    + (4.7 * self.person.height * 12) \
                     - (4.7 * self.person.age)
 
     def protein_requirement(self) -> float:
@@ -152,14 +157,15 @@ class Diet():
         else:
             self.athlete = athlete
 
-        # Initially macro variables are set to zero
+        # Set initially macros to zero
         self.protein = 0
         self.carbs = 0
         self.fats = 0
         self.total = 0
         
     @property
-    def set_protein(self):
+    def set_protein(self) -> float:
+        """Proteins in grams"""
         return self.protein
 
     @set_protein.setter
@@ -167,7 +173,8 @@ class Diet():
         self.protein = protein
 
     @property
-    def set_carbs(self):
+    def set_carbs(self) -> float:
+        """Carbs in grams"""
         return self.carbs
 
     @set_carbs.setter
@@ -176,6 +183,7 @@ class Diet():
 
     @property
     def set_fats(self) -> float:
+        """Fats in grams"""
         return self.fats
 
     @set_fats.setter
@@ -184,11 +192,13 @@ class Diet():
 
     @property
     def set_total(self) -> float:
+        """Total of macros in grams"""
         return self.total
 
     @set_total.setter
     def set_total(self, total: float) -> None:
         self.total = total
+
 
     def set_macros(self, goal: str, weight: float) -> None:
         """Asign diet macro values based on a goal"""
