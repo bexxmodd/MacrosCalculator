@@ -62,9 +62,11 @@ class Person:
     def approximate_body_fat(self) -> None:
         """Approximates body fat % based on given weight, height, age."""
         if self._gender == 'female':
-            self._body_fat = (1.2 * self.body_mass_index * 100) + (0.23 * self._age) - 5.4
+            self._body_fat = (1.2 * self.body_mass_index * 100)
+                            + (0.23 * self._age) - 5.4
         elif self._gender == 'male':
-            self._body_fat = (1.2 * self.body_mass_index * 100) + (0.23 * self._age) - 16.2
+            self._body_fat = (1.2 * self.body_mass_index * 100)
+                            + (0.23 * self._age) - 16.2
 
 
 class Athlete(Person):
@@ -121,9 +123,13 @@ class Measurements():
         to your metabolic weight, such as exercise, will increase your BMR.
         """
         if self.person.gender == 'male':
-            return 66 + (6.23 * self.person.weight) + (12.7 * self.person.height * 12) - (6.8 * self.person.age)
+            return 66 + (6.23 * self.person.weight)
+                    + (12.7 * self.person.height * 12)
+                    - (6.8 * self.person.age)
         elif self.person.gender == 'female':
-            return 665 + (4.35 * self.person.weight) + (4.7 * self.person.height * 12) - (4.7 * self.person.age)
+            return 665 + (4.35 * self.person.weight)
+                    + (4.7 * self.person.height * 12)
+                    - (4.7 * self.person.age)
 
     def protein_requirement(self) -> float:
         """Minimum protein amount (in grams) needed for your body weight"""
@@ -208,7 +214,6 @@ class Diet():
         when exercise and job activity is taken into account.
         ...
         :return: BMR adjusted for the exercise amount.
-        :rtype: int
         """
         m = Measurements(self.athlete)
         tdee = 0
@@ -231,7 +236,6 @@ class Diet():
         """Calculates macros (Proteins, Carbs, Fats) for the muscle gain.
         ...
         :return: protein, carbs, fats, totals: Returns macros as Kcal.
-        :rtype: dict
         """
         if self.goal == 'Gain Weight':
             tdee = self.total_daily_energy_expenditure()
@@ -241,7 +245,9 @@ class Diet():
                     self.protein += diff * (self.protein / self.total)
                     self.carbs += diff * (self.carbs / self.total)
                     self.fats += diff * (self.fats / self.total)
-                    self.total = sum([self.protein, self.carbs, self.fats])
+                    self.total = sum([self.protein,
+                                    self.carbs,
+                                    self.fats])
             diet = {
                 'protein': self.protein,
                 'carbs': self.carbs,
@@ -266,7 +272,9 @@ class Diet():
                     self.protein -= diff * (self.protein / self.total)
                     self.carbs -= diff * (self.carbs / self.total)
                     self.fats -= diff * (self.fats / self.total)
-                    self.total = sum([self.protein, self.carbs, self.fats])
+                    self.total = sum([self.protein,
+                                    self.carbs,
+                                    self.fats])
             diet = {
                 'protein': self.protein,
                 'carbs': self.carbs,
@@ -276,14 +284,13 @@ class Diet():
             return diet
         else:
             raise TypeError(
-                "This method is only for users who want to lose weight"
+                "This method's only for users who want to lose weight"
             )
 
     def calculate_macros_maintain(self) -> dict:
         """Calculates macros (Proteins, Carbs, Fats) to maintain weight.
         ...
         :return: protein, carbs, fats, totals: Returns macros as Kcal.
-        :rtype: dict
         """
         if self.goal == 'Maintain Weight':
             tdee = self.total_daily_energy_expenditure()
@@ -293,14 +300,18 @@ class Diet():
                     self.protein += 1
                     self.carbs += 1.6
                     self.fats += 0.35
-                    self.total = sum([self.protein, self.carbs, self.fats])
+                    self.total = sum([self.protein,
+                                    self.carbs,
+                                    self.fats])
             elif tdee < self.total:
                 diff = self.total - tdee
                 while self.total > tdee:
                     self.protein -= 1
                     self.carbs -= 1.6
                     self.fats -= 0.35
-                    self.total = sum([self.protein, self.carbs, self.fats])
+                    self.total = sum([self.protein,
+                                    self.carbs,
+                                    self.fats])
             diet = {
                 'protein': self.protein,
                 'carbs': self.carbs,
@@ -310,14 +321,8 @@ class Diet():
             return diet
         else:
             raise TypeError(
-                "This method is only for users who want to maintain weight"
+                "This method'ss only for users who want to maintain weight"
             )
-
-    def __str__(self) -> str:
-        return f'Protein: \t{round(self.protein / self.PROTEIN_KCAL, 1)} g. \t{int(self.protein)} kcal.\
-            \nCarbs: \t{round(self.carbs / self.CARBS_KCAL, 1)} g. \t{int(self.carbs)} kcal.\
-            \nFats: \t{round(self.fats /self.FATS_KCAL, 1)} g. \t{int(self.fats)} kcal.\
-            \nTotal: \t\t{int(self.total)} kcal.'
 
 
 if __name__ == '__main__':
@@ -329,4 +334,3 @@ if __name__ == '__main__':
     a.athlete.approximate_body_fat()
     a.athlete.goal = 'Gain Weight'
     a.set_macros(a.athlete.goal, a.athlete.weight)
-    print(a.total)
