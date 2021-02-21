@@ -67,10 +67,18 @@ class Person:
     def approximate_body_fat(self) -> None:
         """Approximates body fat % based on given weight, height, age."""
         if self._gender == 'female':
-            self._body_fat = (1.2 * self.body_mass_index * 100) \
-                            + (0.23 * self._age) - 5.4
+            self.approximate_female_body_fat()
         elif self._gender == 'male':
-            self._body_fat = (1.2 * self.body_mass_index * 100) \
+            self._approximate_male_body_fat()
+
+    def _approximate_female_body_fat(self) -> None:
+        """Calculates female's body fat % with rough estimation"""
+        self._body_fat = (1.2 * self.body_mass_index * 100) \
+                        + (0.23 * self._age) - 5.4
+
+    def _approximate_male_body_fat(self) -> None:
+        """Calculates male's body fat % with rough estimation"""
+        self._body_fat = (1.2 * self.body_mass_index * 100) \
                             + (0.23 * self._age) - 16.2
 
 
@@ -106,7 +114,7 @@ class Athlete(Person):
     def goal(self, goal: str):
         self._goal = goal
 
-    
+
 class Measurements():
     """Calculate body measurements and indices of a Person"""
 
@@ -117,12 +125,14 @@ class Measurements():
             self.person = person
 
     def lean_body_mass(self) -> float:
-        """LBM is a part of body composition that is defined
+        """
+        LBM is a part of body composition that is defined
         as the difference between body weight and body fat weight."""
         return self.person.weight * (1 - self.person.body_fat / 100)
 
     def basal_metabolic_rate(self) -> float:
-        """BMR is calories required to keep your body functioning at rest.
+        """
+        BMR is calories required to keep your body functioning at rest.
         
         BMR is also known as your body's metabolism; therefore, any increase
         to your metabolic weight, such as exercise, will increase your BMR.
@@ -141,8 +151,9 @@ class Measurements():
         return self.lean_body_mass() / 2.20462 * 2.25
 
 
-class Diet():
-    """Creates a dispersal of the macros based on a fitness goal.
+class DietMacros():
+    """
+    Creates a dispersal of the macros based on a fitness goal.
     Uses Person class to approximate various indexed and diet type.
     """
 
@@ -220,7 +231,8 @@ class Diet():
         self.total = sum([self.protein, self.carbs, self.fats])
 
     def total_daily_energy_expenditure(self) -> float:
-        """TDEE is an estimation of calories burned per day,
+        """
+        TDEE is an estimation of calories burned per day,
         when exercise and job activity is taken into account.
         ...
         :return: BMR adjusted for the exercise amount.
@@ -237,8 +249,8 @@ class Diet():
         elif self.athlete.exercise_freq == '5 to 7 days':
             tdee = m.basal_metabolic_rate() * 1.725
 
-        # Additional multiplier if the user has a physically active job.
-        if self.athlete.active_job == True:
+        # if the user has a physically active job.
+        if self.athlete.active_job:
             return tdee * 1.15
         return tdee
 
@@ -258,13 +270,12 @@ class Diet():
                     self.total = sum([self.protein,
                                     self.carbs,
                                     self.fats])
-            diet = {
+            return {
                 'protein': self.protein,
                 'carbs': self.carbs,
                 'fats': self.fats,
                 'total': self.total
             }
-            return diet
         else:
             raise TypeError(
                 "This method is only for users who want to gain weight"
@@ -285,13 +296,12 @@ class Diet():
                     self.total = sum([self.protein,
                                     self.carbs,
                                     self.fats])
-            diet = {
+            return {
                 'protein': self.protein,
                 'carbs': self.carbs,
                 'fats': self.fats,
                 'total': self.total
             }
-            return diet
         else:
             raise TypeError(
                 "This method's only for users who want to lose weight"
@@ -322,13 +332,12 @@ class Diet():
                     self.total = sum([self.protein,
                                     self.carbs,
                                     self.fats])
-            diet = {
+            return {
                 'protein': self.protein,
                 'carbs': self.carbs,
                 'fats': self.fats,
                 'total': self.total
             }
-            return diet
         else:
             raise TypeError(
                 "This method'ss only for users who want to maintain weight"
@@ -336,7 +345,7 @@ class Diet():
 
 
 if __name__ == '__main__':
-    a = Diet()
+    a = DietMacros()
     a.athlete.height=6.0
     a.athlete.weight=175
     a.athlete.age=30
@@ -344,3 +353,4 @@ if __name__ == '__main__':
     a.athlete.approximate_body_fat()
     a.athlete.goal = 'Gain Weight'
     a.set_macros(a.athlete.goal, a.athlete.weight)
+    print(a)
