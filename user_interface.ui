@@ -7,8 +7,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>529</width>
-    <height>454</height>
+    <width>511</width>
+    <height>469</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -416,8 +416,8 @@
    <widget class="QWidget" name="horizontalLayoutWidget">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>350</y>
+      <x>0</x>
+      <y>380</y>
       <width>511</width>
       <height>32</height>
      </rect>
@@ -672,7 +672,7 @@ color: rgb(238, 238, 236);</string>
       <x>20</x>
       <y>250</y>
       <width>221</width>
-      <height>60</height>
+      <height>126</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout">
