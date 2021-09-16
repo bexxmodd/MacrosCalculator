@@ -1,0 +1,16 @@
+C:\Users\Bexx\Source\Repos\MacrosCalculator\MacrosCalculator\obj\Debug\net5.0-windows\MacrosCalculator.csproj.AssemblyReference.cache
+C:\Users\Bexx\Source\Repos\MacrosCalculator\MacrosCalculator\bin\Debug\net5.0-windows\MacrosCalculator.exe
+C:\Users\Bexx\Source\Repos\MacrosCalculator\MacrosCalculator\bin\Debug\net5.0-windows\MacrosCalculator.deps.json
+C:\Users\Bexx\Source\Repos\MacrosCalculator\MacrosCalculator\bin\Debug\net5.0-windows\MacrosCalculator.runtimeconfig.json
+C:\Users\Bexx\Source\Repos\MacrosCalculator\MacrosCalculator\bin\Debug\net5.0-windows\MacrosCalculator.runtimeconfig.dev.json
+C:\Users\Bexx\Source\Repos\MacrosCalculator\MacrosCalculator\bin\Debug\net5.0-windows\MacrosCalculator.dll
+C:\Users\Bexx\Source\Repos\MacrosCalculator\MacrosCalculator\bin\Debug\net5.0-windows\ref\MacrosCalculator.dll
+C:\Users\Bexx\Source\Repos\MacrosCalculator\MacrosCalculator\bin\Debug\net5.0-windows\MacrosCalculator.pdb
+C:\Users\Bexx\Source\Repos\MacrosCalculator\MacrosCalculator\obj\Debug\net5.0-windows\MacrosCalculator.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Bexx\Source\Repos\MacrosCalculator\MacrosCalculator\obj\Debug\net5.0-windows\MacrosCalculator.AssemblyInfoInputs.cache
+C:\Users\Bexx\Source\Repos\MacrosCalculator\MacrosCalculator\obj\Debug\net5.0-windows\MacrosCalculator.AssemblyInfo.cs
+C:\Users\Bexx\Source\Repos\MacrosCalculator\MacrosCalculator\obj\Debug\net5.0-windows\MacrosCalculator.csproj.CoreCompileInputs.cache
+C:\Users\Bexx\Source\Repos\MacrosCalculator\MacrosCalculator\obj\Debug\net5.0-windows\MacrosCalculator.dll
+C:\Users\Bexx\Source\Repos\MacrosCalculator\MacrosCalculator\obj\Debug\net5.0-windows\ref\MacrosCalculator.dll
+C:\Users\Bexx\Source\Repos\MacrosCalculator\MacrosCalculator\obj\Debug\net5.0-windows\MacrosCalculator.pdb
+C:\Users\Bexx\Source\Repos\MacrosCalculator\MacrosCalculator\obj\Debug\net5.0-windows\MacrosCalculator.genruntimeconfig.cache

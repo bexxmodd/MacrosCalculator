@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "MacrosCalculator": {
+      "commandName": "Project",
+      "workingDirectory": "C:\\Users\\Bexx\\Source\\Repos\\MacrosCalculator\\MacrosCalculator"
+    }
+  }
+}
